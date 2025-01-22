@@ -1,7 +1,7 @@
 <?php
 require '../includes/config/database.php';
 
-// Consulta para obtener los proyectos (posts) junto con sus archivos, imágenes y valoraciones
+// Consulta para obtener los proyectos (posts) junto con sus archivos, imágenes y valoraciones 
 $query = "SELECT p.id, p.titulo, p.descripcion, p.fecha_publicacion, u.nombre, u.apellido, 
                  GROUP_CONCAT(a.archivo_url) AS archivos, 
                  GROUP_CONCAT(i.imagen_url) AS imagenes, 
