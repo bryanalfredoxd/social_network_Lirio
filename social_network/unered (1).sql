@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-01-2025 a las 04:31:27
+-- Tiempo de generación: 23-01-2025 a las 03:03:51
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `unered` 
+-- Base de datos: `unered`
 --
 
 -- --------------------------------------------------------
@@ -43,7 +43,8 @@ INSERT INTO `archivos_proyectos` (`id`, `proyecto_id`, `archivo_url`) VALUES
 (3, 10, '../uploads/threads/docsredes.xcf'),
 (4, 12, '../uploads/threads/docs/docsunered.sql'),
 (5, 13, '../uploads/threads/docs/docsver_transaciones_empleado.php'),
-(6, 14, '../uploads/threads/docs/docsGrabación (7).m4a');
+(6, 14, '../uploads/threads/docs/docsGrabación (7).m4a'),
+(7, 17, '../uploads/threads/docs/docsvideo gerencia modulo IV.pdf');
 
 -- --------------------------------------------------------
 
@@ -141,7 +142,11 @@ INSERT INTO `imagenes_proyectos` (`id`, `proyecto_id`, `imagen_url`) VALUES
 (4, 11, '../uploads/threads/images/imagesIMG-20240607-WA0100.jpg'),
 (5, 12, '../uploads/threads/images/imagesNiño Rata.jpg'),
 (6, 13, '../uploads/threads/images/imagescentralcash.png'),
-(7, 14, '../uploads/threads/images/imagesLirio XD.jpg');
+(7, 14, '../uploads/threads/images/imagesLirio XD.jpg'),
+(8, 16, '../uploads/threads/images/imagesNiño Rata.jpg'),
+(9, 17, '../uploads/threads/images/imagesvlcsnap-2024-05-01-20h58m06s915.png'),
+(10, 18, '../uploads/threads/images/imagesManuel.jpg'),
+(11, 19, '../uploads/threads/images/imagesFM.jpg');
 
 -- --------------------------------------------------------
 
@@ -186,7 +191,11 @@ INSERT INTO `proyectos` (`id`, `usuario_id`, `titulo`, `descripcion`, `fecha_pub
 (12, 5, 'Ahora si funciona', 'ya funciona esta porqueria', '2025-01-22 01:09:07'),
 (13, 5, 'sssssssssssssssssssssssss', 'sssssssssssssssssssssssss', '2025-01-22 01:11:44'),
 (14, 9, 'jakjdajskdj', 'kajsdkajskdas', '2025-01-22 02:20:58'),
-(15, 9, 'lklklklkl', 'lklklkklklk', '2025-01-22 02:32:00');
+(15, 9, 'lklklklkl', 'lklklkklklk', '2025-01-22 02:32:00'),
+(16, 9, 'visualizacion', 'esperemos se vea bien ', '2025-01-22 21:07:19'),
+(17, 9, ' otra prueba visualización', 'ajsdkasdkasd', '2025-01-22 21:33:30'),
+(18, 6, 'Usuario de manuel', 'esperemos funcione', '2025-01-22 22:39:11'),
+(19, 6, 'lklklklklklllklklk', 'hdsjfhsdjfhsjdhf', '2025-01-22 23:45:29');
 
 -- --------------------------------------------------------
 
@@ -215,7 +224,34 @@ INSERT INTO `proyectos_categorias` (`id`, `proyecto_id`, `categoria_id`) VALUES
 (8, 12, 7),
 (9, 13, 25),
 (10, 14, 6),
-(11, 15, 14);
+(11, 15, 14),
+(12, 16, 5),
+(13, 17, 16),
+(14, 18, 30),
+(15, 19, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `retweets`
+--
+
+CREATE TABLE `retweets` (
+  `id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `proyecto_id` int(11) NOT NULL,
+  `fecha_retweet` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `retweets`
+--
+
+INSERT INTO `retweets` (`id`, `usuario_id`, `proyecto_id`, `fecha_retweet`) VALUES
+(40, 2, 17, '2025-01-22 22:13:33'),
+(41, 6, 17, '2025-01-22 22:34:12'),
+(42, 6, 17, '2025-01-22 22:35:46'),
+(43, 6, 18, '2025-01-22 23:44:58');
 
 -- --------------------------------------------------------
 
@@ -241,7 +277,6 @@ CREATE TABLE `usuarios` (
   `apellido` varchar(100) NOT NULL,
   `carrera` varchar(100) NOT NULL,
   `semestre` varchar(10) NOT NULL,
-  `intereses` text DEFAULT NULL,
   `foto_perfil` varchar(255) DEFAULT NULL,
   `email` varchar(100) NOT NULL,
   `contrasena` varchar(255) NOT NULL,
@@ -252,13 +287,34 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `carrera`, `semestre`, `intereses`, `foto_perfil`, `email`, `contrasena`, `fecha_registro`) VALUES
-(2, 'Bryan', 'Moreno', 'Ingeniería en Informática', 'IX', '', '../uploads/profiles/bryanalfredoxd@gmail.com.jpg', 'bryanalfredoxd@gmail.com', '', '2025-01-21 16:45:17'),
-(5, '', '', '', '', NULL, '../uploads/profiles/lirioselequedaapliciones@gmail.com.png', '', '', '2025-01-21 19:22:45'),
-(6, 'Manuel', 'Méndez', 'Ingeniería en Informática', 'VI', NULL, '../public/images/profile-default.png', 'manuel@gmail.com', '$2y$10$vfh9N0IbdxfpN7SvBLrLmuqJd4BEvGQ536UCn4sCHOKRWWet6qP7K', '2025-01-21 22:09:04'),
-(7, 'exau', 'serrano', 'Ingeniería en Informática', 'VII', NULL, '../uploads/profiles/exau@gmail.com.png', 'exau@gmail.com', '$2y$10$eo87JQNaH2A1VTrEpxvuLe7.E.6fPUi45Fj2hIUPgRQT9DcB4qxw2', '2025-01-22 01:20:31'),
-(8, 'lisandro', 'corro', 'Ingeniería en Informática', 'VIII', NULL, '../uploads/profiles/lisandro@gmail.com.jpg', 'lisandro@gmail.com', '$2y$10$hIVINuxusGzVnVW5yMgILOWbzdPYIBmPrcm9BJfygXrpQfZ2gpq5u', '2025-01-22 01:28:19'),
-(9, 'lirio', 'loca', 'Ingeniería en Informática', 'V', '', '../uploads/profiles/latipaesta@gmail.com.jpg', 'latipaesta@gmail.com', '$2y$10$tpslixlU1kzXBwES0BFnku1YiXiSL4WHdxypDEyu4NKlN6HW0WvDu', '2025-01-22 02:17:35');
+INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `carrera`, `semestre`, `foto_perfil`, `email`, `contrasena`, `fecha_registro`) VALUES
+(2, 'Bryan', 'Moreno', 'Ingeniería en Informática', 'IX', '../uploads/profiles/bryanalfredoxd@gmail.com.jpg', 'bryanalfredoxd@gmail.com', '', '2025-01-21 16:45:17'),
+(5, '', '', '', '', '../uploads/profiles/lirioselequedaapliciones@gmail.com.png', '', '', '2025-01-21 19:22:45'),
+(6, 'Manuellll', 'Méndez', 'Ingeniería en Informática', 'II', '../uploads/profiles/manuel@gmail.com.jpg', 'manuel@gmail.com', '$2y$10$vfh9N0IbdxfpN7SvBLrLmuqJd4BEvGQ536UCn4sCHOKRWWet6qP7K', '2025-01-21 22:09:04'),
+(7, 'exau', 'serrano', 'Ingeniería en Informática', 'VII', '../uploads/profiles/exau@gmail.com.png', 'exau@gmail.com', '$2y$10$eo87JQNaH2A1VTrEpxvuLe7.E.6fPUi45Fj2hIUPgRQT9DcB4qxw2', '2025-01-22 01:20:31'),
+(8, 'lisandro', 'corro', 'Ingeniería en Informática', 'VIII', '../uploads/profiles/lisandro@gmail.com.jpg', 'lisandro@gmail.com', '$2y$10$hIVINuxusGzVnVW5yMgILOWbzdPYIBmPrcm9BJfygXrpQfZ2gpq5u', '2025-01-22 01:28:19'),
+(9, 'liriooo', 'loca', 'Ingeniería en Informática', 'III', '../uploads/profiles/latipaesta@gmail.com.jpg', 'latipaesta@gmail.com', '$2y$10$tpslixlU1kzXBwES0BFnku1YiXiSL4WHdxypDEyu4NKlN6HW0WvDu', '2025-01-22 02:17:35');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios_categorias`
+--
+
+CREATE TABLE `usuarios_categorias` (
+  `id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `categoria_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios_categorias`
+--
+
+INSERT INTO `usuarios_categorias` (`id`, `usuario_id`, `categoria_id`) VALUES
+(4, 9, 2),
+(5, 9, 3),
+(6, 9, 5);
 
 -- --------------------------------------------------------
 
@@ -338,6 +394,14 @@ ALTER TABLE `proyectos_categorias`
   ADD KEY `categoria_id` (`categoria_id`);
 
 --
+-- Indices de la tabla `retweets`
+--
+ALTER TABLE `retweets`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuario_id` (`usuario_id`),
+  ADD KEY `proyecto_id` (`proyecto_id`);
+
+--
 -- Indices de la tabla `seguidores_categorias`
 --
 ALTER TABLE `seguidores_categorias`
@@ -351,6 +415,14 @@ ALTER TABLE `seguidores_categorias`
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indices de la tabla `usuarios_categorias`
+--
+ALTER TABLE `usuarios_categorias`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuario_id` (`usuario_id`),
+  ADD KEY `categoria_id` (`categoria_id`);
 
 --
 -- Indices de la tabla `valoraciones`
@@ -368,7 +440,7 @@ ALTER TABLE `valoraciones`
 -- AUTO_INCREMENT de la tabla `archivos_proyectos`
 --
 ALTER TABLE `archivos_proyectos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -392,7 +464,7 @@ ALTER TABLE `comentarios`
 -- AUTO_INCREMENT de la tabla `imagenes_proyectos`
 --
 ALTER TABLE `imagenes_proyectos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `notificaciones`
@@ -404,13 +476,19 @@ ALTER TABLE `notificaciones`
 -- AUTO_INCREMENT de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_categorias`
 --
 ALTER TABLE `proyectos_categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de la tabla `retweets`
+--
+ALTER TABLE `retweets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `seguidores_categorias`
@@ -423,6 +501,12 @@ ALTER TABLE `seguidores_categorias`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios_categorias`
+--
+ALTER TABLE `usuarios_categorias`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `valoraciones`
@@ -480,11 +564,25 @@ ALTER TABLE `proyectos_categorias`
   ADD CONSTRAINT `proyectos_categorias_ibfk_2` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`);
 
 --
+-- Filtros para la tabla `retweets`
+--
+ALTER TABLE `retweets`
+  ADD CONSTRAINT `retweets_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `retweets_ibfk_2` FOREIGN KEY (`proyecto_id`) REFERENCES `proyectos` (`id`) ON DELETE CASCADE;
+
+--
 -- Filtros para la tabla `seguidores_categorias`
 --
 ALTER TABLE `seguidores_categorias`
   ADD CONSTRAINT `seguidores_categorias_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
   ADD CONSTRAINT `seguidores_categorias_ibfk_2` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`);
+
+--
+-- Filtros para la tabla `usuarios_categorias`
+--
+ALTER TABLE `usuarios_categorias`
+  ADD CONSTRAINT `usuarios_categorias_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `usuarios_categorias_ibfk_2` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`);
 
 --
 -- Filtros para la tabla `valoraciones`
