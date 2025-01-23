@@ -2,7 +2,7 @@
 // Inicia la sesión
 session_start();
 
-// Verifica si el usuario ha iniciado sesión 
+// Verifica si el usuario ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("Location: ../../index.html");
     exit;

@@ -11,7 +11,7 @@ if (!isset($_SESSION["nombre_usuario"])) {
 $email_usuario = $_SESSION["nombre_usuario"]; // Usamos el correo almacenado en la sesión como identificador
 
 // Consulta para obtener los datos del usuario
-$query = "SELECT nombre, apellido, carrera, semestre, intereses, foto_perfil, email, contrasena FROM usuarios WHERE email = ?";
+$query = "SELECT nombre, apellido, carrera, semestre, foto_perfil, email, contrasena FROM usuarios WHERE email = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("s", $email_usuario);
 $stmt->execute();
@@ -28,7 +28,6 @@ $nombre_usuario = $user['nombre'];
 $apellido_usuario = $user['apellido'];
 $carrera_usuario = $user['carrera'];
 $semestre_usuario = $user['semestre'];
-$intereses_usuario = $user['intereses'];
 $correo_usuario = $user['email'];
 $contrasena_usuario = $user['contrasena'];
 $foto_perfil = !empty($user['foto_perfil']) ? $user['foto_perfil'] : 'profile-default.png';
@@ -81,19 +80,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nuevo_apellido = $_POST["apellido"];
     $nueva_carrera = $_POST["carrera"];
     $nuevo_semestre = $_POST["semestre"];
-    $nuevos_intereses = $_POST["intereses"];
     $nuevo_correo = $_POST["email"];
     $nueva_contrasena = $_POST["contrasena"];
 
     // Validar que la conexión a la base de datos está definida
     if (isset($conn)) {
         // Consulta preparada para actualizar datos
-        $update_query = "UPDATE usuarios SET nombre=?, apellido=?, carrera=?, semestre=?, intereses=?, email=?, contrasena=? WHERE email=?";
+        $update_query = "UPDATE usuarios SET nombre=?, apellido=?, carrera=?, semestre=?, email=?, contrasena=? WHERE email=?";
         $stmt = $conn->prepare($update_query);
 
         if ($stmt) {
             // Asignar valores a los parámetros
-            $stmt->bind_param("ssssssss", $nuevo_nombre, $nuevo_apellido, $nueva_carrera, $nuevo_semestre, $nuevos_intereses, $nuevo_correo, $nueva_contrasena, $email_usuario);
+            $stmt->bind_param("sssssss", $nuevo_nombre, $nuevo_apellido, $nueva_carrera, $nuevo_semestre, $nuevo_correo, $nueva_contrasena, $email_usuario);
 
             // Ejecutar la consulta y verificar el resultado
             if ($stmt->execute()) {

@@ -102,6 +102,14 @@ $foto_perfil_path = !empty($user['foto_perfil']) ? $user['foto_perfil'] : '../pu
         </div>
     </div>
 
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Publicaciones de Proyectos</h1>
+
+        <!-- Incluir los posts -->
+        <?php include("../models/post_users.php"); ?>
+
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

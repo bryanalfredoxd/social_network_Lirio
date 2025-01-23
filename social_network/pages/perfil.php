@@ -95,10 +95,6 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="intereses" class="form-label">Intereses</label>
-                            <textarea class="form-control" id="intereses" name="intereses" rows="3"><?php echo htmlspecialchars($intereses_usuario); ?></textarea>
-                        </div>
                         <button type="submit" name="update_profile" class="btn btn-primary">Guardar cambios</button>
                     </form>
                 </div>

@@ -1,0 +1,107 @@
+    /* Estilos para ajustar las publicaciones */
+    .post {
+        max-width: 600px; /* Limita el ancho del post */
+        margin: 10px auto; /* Centra las publicaciones en la página */
+    }
+
+    .post img {
+        max-width: 100%; /* Ajusta el ancho de las imágenes al contenedor */
+        max-height: 300px; /* Establece una altura máxima */
+        object-fit: cover; /* Recorta las imágenes si exceden las dimensiones */
+        border-radius: 10px; /* Bordes redondeados para las imágenes */
+    }
+
+    .post img.rounded-circle {
+    border: 2px solid #ddd;
+}
+
+
+    .card {
+        border-radius: 10px; /* Bordes redondeados para las tarjetas */
+        overflow: hidden; /* Asegura que las imágenes no sobresalgan */
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    /* Estilo para el botón de retweet cuando está en estado "sin retweetear" */
+.retweet-btn {
+    background-color: transparent;
+    color: black;
+    border-color: transparent;
+}
+
+.retweet-btn:hover, .comment-btn:hover {
+    background-color: transparent;
+    border-color: transparent;
+    color: rgb(0, 255, 0);
+}
+
+/* Estilo para el botón de retweet cuando ya fue retweeteado */
+.retweeted {
+    color: rgb(0, 255, 0);
+}
+
+
+
+/* Estilo para los botones de comentarios y me gusta */
+.like-btn, .comment-btn {
+    background-color: transparent;
+    color: black;
+    border-color: transparent;
+}
+
+.like-btn:hover, .comment-btn:hover {
+    background-color: transparent;
+    border-color: transparent;
+    color: red;
+}
+
+/* Botón de "Me gusta" cuando ha sido dado */
+.liked {
+    color: rgb(255, 0, 0);
+}
+
+.comment-btn2:hover {
+    background-color: transparent;
+    border-color: transparent;
+    color: rgb(17, 0, 255);
+}
+
+
+/* Alineación de los botones en una fila */
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Espaciado entre los botones */
+    align-items: center;
+}
+
+.d-flex .btn {
+    flex: 1; /* Asegura que los botones ocupen un espacio equitativo */
+}
+
+/* Estilo de los botones */
+.retweet-btn, .like-btn, .comment-btn2 {
+    padding: 5px 10px;
+    
+    border-radius: 20px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.retweet-btn:hover {
+    background-color: rgba(0, 255, 0, 0.129);
+    border-color: rgb(0, 255, 0);
+}
+
+.like-btn:hover {
+    background-color: rgba(255, 0, 0, 0.129);
+    border-color: rgb(255, 0, 0);
+}
+
+.comment-btn2:hover {
+    background-color: rgba(17, 0, 255, 0.129);
+    border-color: rgb(17, 0, 255);
+}
