@@ -13,7 +13,7 @@
     
     
 
-    <?php include("../models/data_home.php"); ?>
+    <?php include("../models/like_post.php"); ?>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

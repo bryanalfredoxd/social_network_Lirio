@@ -2,10 +2,10 @@ document.querySelectorAll('.comment-btn2').forEach(button => {
     button.addEventListener('click', function () {
         const postId = this.getAttribute('data-post-id');
         const userId = this.getAttribute('data-user-id');
-
+  
         // Limpiar el campo de texto del comentario antes de mostrar la modal
         document.getElementById('commentText').value = "";
-
+  
         // Obtener los detalles del proyecto (título y descripción)
         fetch(`../controllers/obtener_detalles_proyecto.php?post_id=${postId}`)
             .then(response => response.json())
@@ -14,14 +14,14 @@ document.querySelectorAll('.comment-btn2').forEach(button => {
                     // Rellenar la modal con los datos del proyecto 
                     document.getElementById('projectTitle').textContent = data.project.titulo;
                     document.getElementById('projectDescription').textContent = data.project.descripcion;
-
+  
                     // Mostrar la modal
                     const commentModal = new bootstrap.Modal(document.getElementById('commentModal'));
                     commentModal.show();
-
+  
                     // Manejar el envío del comentario
                     const submitCommentButton = document.getElementById('submitComment');
-
+  
                     // Elimina cualquier evento previo para evitar duplicados
                     submitCommentButton.replaceWith(submitCommentButton.cloneNode(true));
                     document.getElementById('submitComment').addEventListener('click', function () {
@@ -35,8 +35,21 @@ document.querySelectorAll('.comment-btn2').forEach(button => {
                                 .then(response => response.json())
                                 .then(data => {
                                     if (data.success) {
-                                        // Forzar recarga de la página actual
-                                        window.location = `${window.location.origin}/redsocial/controllers/publicacion_detalle.php?post_id=${postId}`;
+                                        // Si el comentario se agrega correctamente
+                                        // Actualizar el contador de comentarios
+                                        const commentCountElem = document.querySelector(`[data-post-id="${postId}"] .comment-count`);
+                                        if (commentCountElem) {
+                                            commentCountElem.textContent = parseInt(commentCountElem.textContent) + 1;
+                                        }
+  
+                                        // Actualizar el icono de comentarios (si es necesario)
+                                        const commentIcon = document.querySelector(`[data-post-id="${postId}"] .comment-icon`);
+                                        if (commentIcon) {
+                                            commentIcon.classList.add('commented');
+                                        }
+  
+                                        // Cerrar la modal
+                                        commentModal.hide();
                                     } else {
                                         alert('Error al agregar el comentario: ' + (data.error || 'No se pudo procesar la solicitud.'));
                                     }
@@ -52,4 +65,5 @@ document.querySelectorAll('.comment-btn2').forEach(button => {
             })
             .catch(error => console.error('Error:', error));
     });
-});
+  });
+  

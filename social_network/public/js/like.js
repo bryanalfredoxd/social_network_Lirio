@@ -1,4 +1,3 @@
-// Función de JavaScript para manejar "Me gusta"
 document.querySelectorAll('.like-btn').forEach(button => {
     button.addEventListener('click', function() {
         const postId = this.getAttribute('data-post-id');
@@ -18,15 +17,22 @@ document.querySelectorAll('.like-btn').forEach(button => {
             if (data.success) {
                 let currentCount = parseInt(likeCountElem.textContent);
 
+                // Si la acción es agregar "Me gusta"
                 if (data.action === 'added') {
                     likeCountElem.textContent = currentCount + 1;
                     buttonElem.classList.add('liked');
-                    likeTextElem.textContent = ''; // Texto para el botón
-                } else if (data.action === 'removed') {
+                    likeTextElem.textContent = ''; // Elimina el texto
+                } 
+                // Si la acción es quitar "Me gusta"
+                else if (data.action === 'removed') {
                     likeCountElem.textContent = currentCount - 1;
                     buttonElem.classList.remove('liked');
                     likeTextElem.textContent = ''; // Elimina el texto
                 }
+
+                // Aquí puedes evitar la recarga y manejar solo el cambio en los "likes"
+                // Evita que las imágenes se dupliquen al no renderizar nuevamente toda la página
+                // Solo actualiza el botón de "like" y su estado
             } else {
                 alert('Error: ' + (data.error || 'No se pudo procesar la solicitud.'));
             }

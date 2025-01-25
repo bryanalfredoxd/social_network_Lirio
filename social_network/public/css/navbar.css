@@ -1,31 +1,77 @@
 body {
     background-color: #000;
     color: #fff;
+    margin: 0;
+    padding: 0;
 }
+
+/* Estilo general para el navbar */
 .navbar {
-    position: fixed;
+    position: fixed; /* Fija la barra en la pantalla */
     top: 0;
     left: 0;
-    height: 100%;
-    width: 70px; /* Aumentado para más espacio */
+    height: 100%; /* Ocupa toda la altura de la pantalla */
+    width: 70px; /* Ancho del navbar */
     background-color: #cc8400;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Coloca los elementos en una columna */
     align-items: center;
-    padding-top: 5%;
+    padding-top: 1rem;
+    z-index: 1000; /* Prioridad en capas */
+    transition: all 0.3s ease;
 }
+
 .navbar-nav {
-    width: 100%;
+    width: 100%; /* Ocupa todo el ancho del navbar */
+    padding: 0;
+    margin: 0;
+    list-style: none; /* Elimina puntos de lista */
+    display: flex;
+    flex-direction: column; /* Coloca los ítems en una columna */
+    justify-content: space-between; /* Distribuye los ítems equitativamente */
+    height: 100%; /* Asegura que ocupen toda la altura del navbar */
 }
+
 .nav-item {
-    width: 100%;
+    width: 100%; /* Ocupa todo el ancho disponible */
     text-align: center;
-    margin-bottom: 40px;
 }
+
 .nav-link {
     color: #fff;
-    font-size: 50px; /* íconos más grandes */
+    font-size: 2rem; /* Íconos más grandes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Asegura que ocupen todo el espacio asignado */
+    transition: transform 0.3s ease; /* Transición suave para el efecto de aumento */
 }
+
 .nav-link:hover {
-    color: #000000;
+    transform: scale(1.3); /* Aumenta el tamaño del ícono al 130% */
+}
+
+
+/* Cambios responsive */
+@media (max-width: 768px) {
+    .navbar {
+        top: auto;
+        bottom: 0; /* Mueve el navbar a la parte inferior */
+        left: 0;
+        height: 70px; /* Reduce la altura del navbar */
+        width: 100%; /* Ocupa todo el ancho de la pantalla */
+        flex-direction: row; /* Cambia a una fila horizontal */
+        justify-content: space-around; /* Espaciado uniforme entre ítems */
+        align-items: center;
+        padding: 0;
+    }
+
+    .nav-item {
+        margin: 0; /* Elimina márgenes extra */
+    }
+
+    .nav-link {
+        font-size: 1.8rem; /* Íconos ligeramente más pequeños en móviles */
+        height: auto; /* Ajusta la altura automáticamente */
+    }
 }

@@ -11,10 +11,31 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="../public/css/perfil.css">
+
+    <style>
+
+.notification-icon {
+    position: relative;
+    font-size: 24px;
+}
+
+.notification-icon .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    padding: 0.3em 0.7em;
+    font-size: 12px;
+}
+
+
+    </style>
+
 </head>
 <body>
     <!-- Barra lateral izquierda de navegación -->
-    <?php include("../includes/partials/navbar.php"); ?>
+    <?php include("../includes/partials/navbar.php"); 
+            include("../models/number_notification.php");
+    ?>
 
     <div class="container profile-container" style="margin-left: 100px;">
         <!-- Imagen de perfil (clicable para actualizar) -->
@@ -30,16 +51,28 @@
             <h1><?php echo htmlspecialchars($nombre_usuario . ' ' . $apellido_usuario); ?></h1>
             <p><?php echo htmlspecialchars($correo_usuario); ?></p>
             <p class="user-bio">¡Hola! soy <?php echo htmlspecialchars($nombre_usuario); ?>, estudiante de <?php echo htmlspecialchars($carrera_usuario); ?>, semestre <?php echo htmlspecialchars($semestre_usuario); ?>. Bienvenid@ a mi perfil</p>
+            
             <div class="profile-buttons">
                 <!-- Botón para abrir la ventana modal de edición -->
                 <button class="btn-custom" data-bs-toggle="modal" data-bs-target="#editProfileModal">
                     <i class="bi bi-pencil-square btn-icon"></i>Editar perfil
                 </button> 
-                <button class="btn-custom-sesion" onclick="location.href='../includes/config/logout.php'"> <!-- Botón de cierre de sesión -->
+
+                <!-- Botón de cierre de sesión -->
+                <button class="btn-custom-sesion" onclick="location.href='../includes/config/logout.php'">
                     <i class="bi bi-box-arrow-right btn-icon"></i>Cerrar sesión
                 </button>
+                
+                <!-- Icono de campana con notificaciones no leídas -->
+                <a href="./notificaciones.php" class="notification-icon">
+                    <i class="bi bi-bell"></i>
+                    <?php if ($total_notificaciones > 0): ?>
+                        <span class="badge bg-danger"><?php echo $total_notificaciones; ?></span>
+                    <?php endif; ?>
+                </a>
             </div>
         </div>
+
         <div class="tabs">
             <div class="tab">Publicaciones</div>
             <div class="tab">Comentarios</div>

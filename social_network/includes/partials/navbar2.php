@@ -3,7 +3,7 @@
 
 <link rel="stylesheet" href="../public/css/navbar.css">
 
-<nav class="navbar">
+<nav class="navbar2">
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" href="../pages/home.php" title="Inicio"><i class="bi bi-house"></i></a>
