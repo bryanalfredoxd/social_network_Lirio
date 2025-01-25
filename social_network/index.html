@@ -3,84 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bienvenido a nuestra red social. Conéctate, comparte y descubre contenido nuevo.">
-    <title>Bienvenido a Nuestra Red Social</title>
+    <meta name="description" content="Únete a la red social universitaria más innovadora.">
+    <title>Unered - Bienvenido</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="./public/css/style.css" rel="stylesheet">
-    <link href="./public/css/login.css" rel="stylesheet">
-    <link href="./public/css/register.css" rel="stylesheet">
 </head>
-<body class="d-flex align-items-center justify-content-center vh-100">
-    <div class="text-center">
-        <img src="public/images/logo.png" alt="Logo de la Red Social" class="mb-4" width="200">
-        <h1 class="fw-bold">Bienvenido a Nuestra Red Social</h1>
-        <p class="text-muted">Conéctate con personas, comparte tus ideas y descubre contenido nuevo.</p>
-        <div class="d-grid gap-3 col-6 mx-auto">
-            <button style="border-radius: 20px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
-                <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
-            </button>
-            <button style="border-radius: 20px;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registerModal">
-                <i class="bi bi-person-plus"></i> Registrarse
-            </button>
-        </div>
-    </div>
-
-    <!-- Modal de Inicio de Sesión -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content login-modal">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<body>
+    <!-- Fondo dinámico -->
+    <div class="login-bg d-flex align-items-center justify-content-center vh-100">
+        <!-- Tarjeta de login -->
+        <div class="login-card text-center shadow-lg p-4 rounded">
+            <img src="public/images/logo.png" alt="Logo Unered" class="mb-4 logo-img">
+            <h2 class="text-light mb-3">¡Bienvenido a UneRed!</h2>
+            <p class="text-secondaryy">Conéctate, comparte ideas y vive lo mejor de la vida universitaria.</p>
+            <form action="./controllers/login.php" method="post" class="text-start">
+                <div class="mb-3">
+                    <label for="username" class="form-label text-light fw-bold">Usuario</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-fill text-primary"></i></span>
+                        <input type="email" class="form-control input-field" id="username" name="username" placeholder="Correo universitario" required>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <!-- Contenido del formulario de inicio de sesión -->
-                    <form action="./controllers/login.php" method="post">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Usuario</label>
-                            <input type="email" class="form-control" id="username" name="username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="contrasena" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="contrasena" name="contrasena" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                    </form>
+                <div class="mb-3">
+                    <label for="password" class="form-label text-light fw-bold">Contraseña</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock-fill text-primary"></i></span>
+                        <input type="password" class="form-control input-field" id="password" name="password" placeholder="********" required>
+                    </div>
                 </div>
+                <button type="submit" class="btn btn-orange btn-lg w-100 rounded-pill mt-3">Iniciar Sesión</button>
+            </form>
+            <div class="text-center mt-4">
+                <p class="text-secondaryy">¿No tienes cuenta? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" class="text-orange">Regístrate</a></p>
+                <a href="#" class="text-light text-decoration-none">¿Olvidaste tu contraseña?</a>
             </div>
         </div>
     </div>
 
     <!-- Modal de Registro -->
     <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content register-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
                 <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="registerModalLabel">Crea tu cuenta en Unered</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="modalContent">
-                    <!-- El contenido se cargará aquí -->
+                <div class="modal-body">
+                    <form action="./controllers/register.php" method="post">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellido" class="form-label">Apellido:</label>
+                            <input type="text" class="form-control" id="apellido" name="apellido" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña:</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carrera" class="form-label">Carrera:</label>
+                            <input type="text" class="form-control" id="carrera" name="carrera" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="semestre" class="form-label">Semestre:</label>
+                            <select class="form-control" id="semestre" name="semestre" required>
+                                <option value="I">I</option>
+                                <option value="II">II</option>
+                                <option value="III">III</option>
+                                <option value="IV">IV</option>
+                                <option value="V">V</option>
+                                <option value="VI">VI</option>
+                                <option value="VII">VII</option>
+                                <option value="VIII">VIII</option>
+                                <option value="IX">IX</option>
+                                <option value="X">X</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-orange w-100 mt-3">Registrarse</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS-->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-        // Usar fetch para cargar el contenido del archivo registro.html
-        fetch('./pages/registro.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('modalContent').innerHTML = data;
-            })
-            .catch(error => console.error('Error al cargar el archivo:', error));
-    </script>
-
 </body>
 </html>

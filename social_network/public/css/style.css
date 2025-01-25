@@ -1,22 +1,67 @@
-body {
-    background-color: #181818; /* Negro (60%) */
+/* Fondo dinámico */
+.login-bg {
+    background: linear-gradient(to right, #4a90e2, #06e6b5);/* Cambié el fondo a un gradiente azul y verde */
+    background-size: cover;
+    background-position: center;
+    position: relative;
 }
-h1 {
-    color: #e99700; /* Naranja (30%) */
+
+.login-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Capa oscura para dar contraste */
+    z-index: 0;
 }
-.text-muted {
-    color: #FFFFFF !important; /* Blanco (10%) */
+
+/* Estilo del logo */
+.logo-img {
+    width: 150px;
+    z-index: 2;
 }
-.btn-primary {
-    background-color: #e99700;
-    border-color: #e99700;
+
+/* Tarjeta de login */
+.login-card {
+    max-width: 400px;
+    background: linear-gradient(to right,#50e3c2, #4a90e2);
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 15px;
+    z-index: 2;
 }
-.btn-success {
-    background-color: #e99700;
-    border-color: #e99700;
+
+/* Entrada de texto */
+.input-field {
+    color: #ffffff;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
 }
-.btn-primary:hover,
-.btn-success:hover {
-    background-color: #cc8400;
-    border-color: #cc8400;
+
+.input-field:focus {
+    border: 2px solid #ee5d1c;
+    box-shadow: 0 0 8px rgba(233, 151, 0, 0.6);
+}
+
+/* Botón */
+.btn-orange {
+    background-color: #ee5d1c;
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-orange:hover {
+    background-color: #ee5d1c;
+    box-shadow: 0 4px 15px rgba(233, 151, 0, 0.5);
+}
+
+/* Texto de ayuda */
+.text-orange {
+    color: #ee5d1c;
+}
+.text-secondaryy {
+    color: #ffffff;
 }
