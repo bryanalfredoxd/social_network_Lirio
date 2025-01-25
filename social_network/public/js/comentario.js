@@ -36,7 +36,7 @@ document.querySelectorAll('.comment-btn2').forEach(button => {
                                 .then(data => {
                                     if (data.success) {
                                         // Forzar recarga de la página actual
-                                        window.location = `${window.location.origin}/redsocial/controllers/publicacion_detalle.php?post_id=${postId}`;
+                                        window.location = `${window.location.origin}/social_network/controllers/publicacion_detalle.php?post_id=${postId}`;
                                     } else {
                                         alert('Error al agregar el comentario: ' + (data.error || 'No se pudo procesar la solicitud.'));
                                     }
