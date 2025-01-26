@@ -1,6 +1,8 @@
 /* Fondo dinámico */
 .login-bg {
-    background: linear-gradient(to right, #4a90e2, #06e6b5);/* Cambié el fondo a un gradiente azul y verde */
+    background-color: #5c6c6c;
+
+    /* Cambié el fondo a un gradiente azul y verde */
     background-size: cover;
     background-position: center;
     position: relative;
@@ -13,7 +15,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* Capa oscura para dar contraste */
     z-index: 0;
 }
 
@@ -26,8 +27,7 @@
 /* Tarjeta de login */
 .login-card {
     max-width: 400px;
-    background: linear-gradient(to right,#50e3c2, #4a90e2);
-    background: rgba(0, 0, 0, 0.85);
+    background-color: #293737;
     border-radius: 15px;
     z-index: 2;
 }

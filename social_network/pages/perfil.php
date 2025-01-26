@@ -18,6 +18,32 @@
     position: relative;
     font-size: 24px;
 }
+.form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    -webkit-appearance: none; /* Para eliminar la apariencia predeterminada en Safari */
+    -moz-appearance: none;    /* Para eliminar la apariencia predeterminada en Firefox */
+    appearance: none;         /* Para eliminar la apariencia predeterminada en la mayoría de los navegadores */
+}
+.select-container {
+    position: relative;
+    display: inline-block;
+}
+
+.select-container select {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    -webkit-appearance: none; /* Eliminar la apariencia predeterminada en Safari */
+    -moz-appearance: none;    /* Eliminar la apariencia predeterminada en Firefox */
+    appearance: none;         /* Eliminar la apariencia predeterminada en otros navegadores */
+}
+
 
 .notification-icon .badge {
     position: absolute;
@@ -80,60 +106,61 @@
         </div>
     </div>
 
-    <!-- Modal de Edición de Perfil -->
-    <div style="color: black;" class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editProfileModalLabel">Editar Perfil</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Formulario para editar los datos -->
-                    <form action="" method="POST">
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo htmlspecialchars($nombre_usuario); ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="apellido" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="apellido" name="apellido" value="<?php echo htmlspecialchars($apellido_usuario); ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($correo_usuario); ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="contrasena" class="form-label">Nueva Contraseña</label>
-                            <input type="password" class="form-control" id="contrasena" name="contrasena" value="<?php echo htmlspecialchars($contrasena_usuario); ?>">
-                            <small class="form-text text-muted">Dejar en blanco si no desea cambiar la contraseña.</small>
-                        </div>
-                        <div class="mb-3">
-                            <label for="carrera" class="form-label">Carrera</label>
-                            <input type="text" class="form-control" id="carrera" name="carrera" value="<?php echo htmlspecialchars($carrera_usuario); ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="semestre" class="form-label">Semestre</label>
-                            <select class="form-control" id="semestre" name="semestre" required>
-                                <option value="I" <?php echo ($semestre_usuario == 'I') ? 'selected' : ''; ?>>I</option>
-                                <option value="II" <?php echo ($semestre_usuario == 'II') ? 'selected' : ''; ?>>II</option>
-                                <option value="III" <?php echo ($semestre_usuario == 'III') ? 'selected' : ''; ?>>III</option>
-                                <option value="IV" <?php echo ($semestre_usuario == 'IV') ? 'selected' : ''; ?>>IV</option>
-                                <option value="V" <?php echo ($semestre_usuario == 'V') ? 'selected' : ''; ?>>V</option>
-                                <option value="VI" <?php echo ($semestre_usuario == 'VI') ? 'selected' : ''; ?>>VI</option>
-                                <option value="VII" <?php echo ($semestre_usuario == 'VII') ? 'selected' : ''; ?>>VII</option>
-                                <option value="VIII" <?php echo ($semestre_usuario == 'VIII') ? 'selected' : ''; ?>>VIII</option>
-                                <option value="IX" <?php echo ($semestre_usuario == 'IX') ? 'selected' : ''; ?>>IX</option>
-                                <option value="X" <?php echo ($semestre_usuario == 'X') ? 'selected' : ''; ?>>X</option>
-                            </select>
-                        </div>
-
-                        <button type="submit" name="update_profile" class="btn btn-primary">Guardar cambios</button>
-                    </form>
-                </div>
+<!-- Modal de Edición de Perfil -->
+<div style="background: rgba(0, 0, 0, 0.85); color: white;" class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: #293737; border-radius: 15px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); color: white; padding: 20px; border: none;">
+            <div class="modal-header" style="border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+                <h5 class="modal-title" id="editProfileModalLabel" style="font-size: 1.5rem; font-weight: bold; color: #ee5d1c; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);">Editar Perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: white; opacity: 0.8;"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario para editar los datos -->
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label" style="font-size: 1rem; color: white;">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo htmlspecialchars($nombre_usuario); ?>" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label" style="font-size: 1rem; color: white;">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" name="apellido" value="<?php echo htmlspecialchars($apellido_usuario); ?>" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label" style="font-size: 1rem; color: white;">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($correo_usuario); ?>" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contrasena" class="form-label" style="font-size: 1rem; color: white;">Nueva Contraseña</label>
+                        <input type="password" class="form-control" id="contrasena" name="contrasena" value="<?php echo htmlspecialchars($contrasena_usuario); ?>" style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
+                        <small class="form-text" style="color: #dcdcdc;">Dejar en blanco si no desea cambiar la contraseña.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="carrera" class="form-label" style="font-size: 1rem; color: white;">Carrera</label>
+                        <input type="text" class="form-control" id="carrera" name="carrera" value="<?php echo htmlspecialchars($carrera_usuario); ?>" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="semestre" class="form-label" style="font-size: 1rem; color: white;">Semestre</label>
+                        <select class="form-control" id="semestre" name="semestre" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
+                            <option value="I" <?php echo ($semestre_usuario == 'I') ? 'selected' : ''; ?>>I</option> 
+                            <option value="II" <?php echo ($semestre_usuario == 'II') ? 'selected' : ''; ?>>II</option>
+                            <option value="III" <?php echo ($semestre_usuario == 'III') ? 'selected' : ''; ?>>III</option>
+                            <option value="IV" <?php echo ($semestre_usuario == 'IV') ? 'selected' : ''; ?>>IV</option>
+                            <option value="V" <?php echo ($semestre_usuario == 'V') ? 'selected' : ''; ?>>V</option>
+                            <option value="VI" <?php echo ($semestre_usuario == 'VI') ? 'selected' : ''; ?>>VI</option>
+                            <option value="VII" <?php echo ($semestre_usuario == 'VII') ? 'selected' : ''; ?>>VII</option>
+                            <option value="VIII" <?php echo ($semestre_usuario == 'VIII') ? 'selected' : ''; ?>>VIII</option>
+                            <option value="IX" <?php echo ($semestre_usuario == 'IX') ? 'selected' : ''; ?>>IX</option>
+                            <option value="X" <?php echo ($semestre_usuario == 'X') ? 'selected' : ''; ?>>X</option>
+                        </select>
+                    </div>
+                    <button type="submit" name="update_profile" class="btn" style="background-color: #ee5d1c; border: none; color: white; padding: 10px 20px; border-radius: 20px; font-size: 1rem; font-weight: bold; cursor: pointer;">Guardar cambios</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
