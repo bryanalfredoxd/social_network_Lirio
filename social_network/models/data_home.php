@@ -68,40 +68,6 @@ $foto_perfil_path = !empty($user['foto_perfil']) ? $user['foto_perfil'] : '../pu
             </div>
         </div>
 
-        <!-- Formulario para publicar -->
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="post-box">
-                    <form action="post.php" method="POST">
-                        <textarea class="form-control mb-3" name="content" rows="3" placeholder="¿Qué está pasando?" required></textarea>
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-send"></i> Publicar
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Lista de publicaciones -->
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="post-list">
-                    <!-- Ejemplo de publicación -->
-                    <div class="post-item">
-                        <div class="d-flex align-items-center mb-2">
-                            <img src="../public/images/profile-default.png" alt="Foto" class="profile-picture me-2">
-                            <span class="fw-bold">Juan Pérez</span>
-                        </div>
-                        <p>¡Este es un ejemplo de publicación! Puedes reemplazar este contenido con datos de tu base de datos.</p>
-                        <small class="text-muted">Publicado el 21/01/2025</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="container mt-5">
         <h1 class="text-center mb-4">Publicaciones de Proyectos</h1>
 

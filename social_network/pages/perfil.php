@@ -1,4 +1,12 @@
-<?php include("../models/data_perfil.php"); ?>
+<?php
+
+include("../models/data_perfil.php");
+
+$buttonSelected = 'posts';
+if(isset($_POST["tab"]) && $_POST["tab"] == 'comments') $buttonSelected = 'comments';
+if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared';
+
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -77,7 +85,7 @@
             <h1><?php echo htmlspecialchars($nombre_usuario . ' ' . $apellido_usuario); ?></h1>
             <p><?php echo htmlspecialchars($correo_usuario); ?></p>
             <p class="user-bio">¡Hola! soy <?php echo htmlspecialchars($nombre_usuario); ?>, estudiante de <?php echo htmlspecialchars($carrera_usuario); ?>, semestre <?php echo htmlspecialchars($semestre_usuario); ?>. Bienvenid@ a mi perfil</p>
-            
+
             <div class="profile-buttons">
                 <!-- Botón para abrir la ventana modal de edición -->
                 <button class="btn-custom" data-bs-toggle="modal" data-bs-target="#editProfileModal">
@@ -98,12 +106,22 @@
                 </a>
             </div>
         </div>
+        <form method="POST" class="tabs">
+            <button type="submit" name="tab" value="posts" class="btn <?php if($buttonSelected == 'posts') echo 'btn-warning' ?> tab">Publicaciones</button>
+            <button type="submit" name="tab" value="comments" class="btn <?php if($buttonSelected == 'comments') echo 'btn-warning' ?> tab">Comentarios</button>
+            <button type="submit" name="tab" value="shared" class="btn <?php if($buttonSelected == 'shared') echo 'btn-warning' ?> tab">Compartidos</button>
+        </form>
 
-        <div class="tabs">
-            <div class="tab">Publicaciones</div>
-            <div class="tab">Comentarios</div>
-            <div class="tab">Compartidos</div>
-        </div>
+        <!-- Incluir los posts -->
+        <?php
+            if($buttonSelected == 'comments') {
+                echo "Comments here";
+            } elseif($buttonSelected == 'shared') {
+                include_once("../models/post_shared.php");
+            } else {
+                include_once("../models/post_my_user.php");
+            }
+        ?>
     </div>
 
 <!-- Modal de Edición de Perfil -->

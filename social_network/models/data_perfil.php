@@ -76,41 +76,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Manejo de actualización de los demás datos del perfil
-    $nuevo_nombre = $_POST["nombre"];
-    $nuevo_apellido = $_POST["apellido"];
-    $nueva_carrera = $_POST["carrera"];
-    $nuevo_semestre = $_POST["semestre"];
-    $nuevo_correo = $_POST["email"];
-    $nueva_contrasena = $_POST["contrasena"];
+    $nuevo_nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : null;
+    $nuevo_apellido = isset($_POST["apellido"]) ? $_POST["apellido"] : null;
+    $nueva_carrera = isset($_POST["carrera"]) ? $_POST["carrera"] : null;
+    $nuevo_semestre = isset($_POST["semestre"]) ? $_POST["semestre"] : null;
+    $nuevo_correo = isset($_POST["email"]) ? $_POST["email"] : null;
+    $nueva_contrasena = isset($_POST["contrasena"]) ? $_POST["contrasena"] : null;
 
-    // Validar que la conexión a la base de datos está definida
-    if (isset($conn)) {
-        // Consulta preparada para actualizar datos
-        $update_query = "UPDATE usuarios SET nombre=?, apellido=?, carrera=?, semestre=?, email=?, contrasena=? WHERE email=?";
-        $stmt = $conn->prepare($update_query);
+    if (isset($nuevo_nombre) && isset($nuevo_apellido) && isset($nueva_carrera) && isset($nuevo_semestre) && isset($nuevo_correo) && isset($nueva_contrasena)) {
+        // Validar que la conexión a la base de datos está definida
+        if (isset($conn)) {
+            // Consulta preparada para actualizar datos
+            $update_query = "UPDATE usuarios SET nombre=?, apellido=?, carrera=?, semestre=?, email=?, contrasena=? WHERE email=?";
+            $stmt = $conn->prepare($update_query);
 
-        if ($stmt) {
-            // Asignar valores a los parámetros
-            $stmt->bind_param("sssssss", $nuevo_nombre, $nuevo_apellido, $nueva_carrera, $nuevo_semestre, $nuevo_correo, $nueva_contrasena, $email_usuario);
+            if ($stmt) {
+                // Asignar valores a los parámetros
+                $stmt->bind_param("sssssss", $nuevo_nombre, $nuevo_apellido, $nueva_carrera, $nuevo_semestre, $nuevo_correo, $nueva_contrasena, $email_usuario);
 
-            // Ejecutar la consulta y verificar el resultado
-            if ($stmt->execute()) {
-                // Actualizar datos en la sesión
-                $_SESSION["nombre_usuario"] = $nuevo_correo; // Actualizar el correo en la sesión
-                $_SESSION["nombre"] = $nuevo_nombre;
-                $_SESSION["apellido"] = $nuevo_apellido;
+                // Ejecutar la consulta y verificar el resultado
+                if ($stmt->execute()) {
+                    // Actualizar datos en la sesión
+                    $_SESSION["nombre_usuario"] = $nuevo_correo; // Actualizar el correo en la sesión
+                    $_SESSION["nombre"] = $nuevo_nombre;
+                    $_SESSION["apellido"] = $nuevo_apellido;
 
-                echo "<script>alert('Datos actualizados correctamente.'); window.location.href = 'perfil.php';</script>";
+                    echo "<script>alert('Datos actualizados correctamente.'); window.location.href = 'perfil.php';</script>";
+                } else {
+                    echo "<script>alert('Error al actualizar los datos. Intente nuevamente.');</script>";
+                }
+
+                $stmt->close(); 
             } else {
-                echo "<script>alert('Error al actualizar los datos. Intente nuevamente.');</script>";
+                echo "<script>alert('Error al preparar la consulta.');</script>";
             }
-
-            $stmt->close(); 
         } else {
-            echo "<script>alert('Error al preparar la consulta.');</script>";
+            echo "<script>alert('Error: No se pudo establecer la conexión con la base de datos.');</script>";
         }
-    } else {
-        echo "<script>alert('Error: No se pudo establecer la conexión con la base de datos.');</script>";
     }
 }
 ?>
