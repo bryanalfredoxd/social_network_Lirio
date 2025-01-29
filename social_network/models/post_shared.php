@@ -167,7 +167,7 @@ echo "</div>"; // Cierra post card
 
         }
     } else {
-        echo "<p>No hay publicaciones hechas por ti.</p>";
+        echo "<p>No hay publicaciones compartidas por ti.</p>";
     }
 
     $conn->close(); // Cierra la conexión

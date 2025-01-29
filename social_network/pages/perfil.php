@@ -66,6 +66,11 @@ if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared'
 
 </head>
 <body>
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
     <!-- Barra lateral izquierda de navegación -->
     <?php include("../includes/partials/navbar.php"); 
             include("../models/number_notification.php");
@@ -107,15 +112,15 @@ if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared'
             </div>
         </div>
         <form method="POST" class="tabs">
-            <button type="submit" name="tab" value="posts" class="btn <?php if($buttonSelected == 'posts') echo 'btn-warning' ?> tab">Publicaciones</button>
-            <button type="submit" name="tab" value="comments" class="btn <?php if($buttonSelected == 'comments') echo 'btn-warning' ?> tab">Comentarios</button>
-            <button type="submit" name="tab" value="shared" class="btn <?php if($buttonSelected == 'shared') echo 'btn-warning' ?> tab">Compartidos</button>
+            <button type="submit" name="tab" value="posts" class="btn <?php if($buttonSelected == 'posts') echo 'btn-warning text-white' ?> tab">Publicaciones</button>
+            <button type="submit" name="tab" value="comments" class="btn <?php if($buttonSelected == 'comments') echo 'btn-warning text-white' ?> tab">Comentarios</button>
+            <button type="submit" name="tab" value="shared" class="btn <?php if($buttonSelected == 'shared') echo 'btn-warning text-white' ?> tab">Compartidos</button>
         </form>
 
         <!-- Incluir los posts -->
         <?php
             if($buttonSelected == 'comments') {
-                echo "Comments here";
+                include_once("../models/comment_my_user.php");
             } elseif($buttonSelected == 'shared') {
                 include_once("../models/post_shared.php");
             } else {
