@@ -22,9 +22,155 @@ if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared'
 
     <style>
 
+
+    /* Estilo general para el body */
+    body {
+        background-color: #2c3e50;
+        color: white;
+    }
+
+    /* Estilo para los botones */
+    .btn-custom, .btn-custom-sesion {
+        background-color: #ee5d1c; /* Naranja */
+        border: none;
+        color: white;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-custom:hover, .btn-custom-sesion:hover {
+        background-color: #d45614; /* Naranja oscuro */
+    }
+
+    .btn-custom-sesion {
+        background-color: #ee5d1c;
+        margin-left: 10px;
+    }
+
+    /* Estilo para la imagen de perfil */
+    .profile-pic {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #ffffff;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .profile-pic:hover {
+        transform: scale(1.1);
+    }
+
+    /* Estilo de los formularios y entradas */
+    .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .form-control:focus {
+        border-color: #ee5d1c;
+        box-shadow: 0 0 5px rgba(238, 93, 28, 0.5);
+    }
+
+    /* Estilo para las pestañas */
+    .tabs .btn {
+        background-color: rgba(0, 0, 0, 0.3);
+        color: white;
+        border-radius: 10px;
+        padding: 10px 20px;
+        margin-right: 5px;
+        font-size: 1rem;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .tabs .btn:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .tabs .btn-warning {
+        background-color: #ee5d1c !important;
+        color: white !important;
+    }
+
+    /* Modal de edición */
+    .modal-content {
+        background-color: #293737;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        color: white;
+        padding: 20px;
+        border: none;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #ee5d1c;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-close {
+        color: white;
+        opacity: 0.8;
+    }
+
+    .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        padding: 0.3em 0.7em;
+        font-size: 12px;
+    }
+
+    /* Estilo para la campana de notificaciones */
+    .notification-icon {
+        position: relative;
+        font-size: 24px;
+    }
+    
+    .notification-icon .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        padding: 0.3em 0.7em;
+        font-size: 12px;
+    }
+
+    /* Asegurarse de que el contenedor del perfil se vea bien */
+    .profile-container {
+        background-color: #34495e;
+        border-radius: 10px;
+        padding: 20px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    /* Estilo para el contenedor de select */
+    .select-container select {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        border-radius: 10px;
+        padding: 10px;
+    }
 .notification-icon {
     position: relative;
-    font-size: 24px;
+    font-size: 30px;
+}
+a {
+    color: #fafafa;
+    text-decoration: underline;
 }
 .form-control {
     background-color: rgba(255, 255, 255, 0.1);
@@ -52,6 +198,20 @@ if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared'
     appearance: none;         /* Eliminar la apariencia predeterminada en otros navegadores */
 }
 
+.d-flex, .btn, .btn2 {
+    flex: 1; /* Asegura que los botones ocupen un espacio equitativo */
+}
+
+.mb-3 {
+    margin-bottom: 1rem !important;
+    max-width: 600px;
+    margin: auto;
+}
+
+.post, .comentarios {
+    max-width: 600px !important;
+    margin: 40px auto !important;
+}
 
 .notification-icon .badge {
     position: absolute;
@@ -60,8 +220,22 @@ if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared'
     padding: 0.3em 0.7em;
     font-size: 12px;
 }
+     /* Responsivo */
+     @media (max-width: 768px) {
+        .tabs {
+            flex-direction: column;
+            align-items: center;
+        }
 
+        .tabs .btn {
+            width: 80%;
+            text-align: center;
+        }
 
+        .content-section {
+            margin-top: 10px;
+        }
+    }
     </style>
 
 </head>
@@ -75,8 +249,8 @@ if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared'
     <?php include("../includes/partials/navbar.php"); 
             include("../models/number_notification.php");
     ?>
-
-    <div class="container profile-container" style="margin-left: 100px;">
+    
+    <div class="container profile-container">
         <!-- Imagen de perfil (clicable para actualizar) -->
         <form action="" method="POST" enctype="multipart/form-data">
             <label for="new_profile_picture">
@@ -164,16 +338,16 @@ if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared'
                     <div class="mb-3">
                         <label for="semestre" class="form-label" style="font-size: 1rem; color: white;">Semestre</label>
                         <select class="form-control" id="semestre" name="semestre" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
-                            <option value="I" <?php echo ($semestre_usuario == 'I') ? 'selected' : ''; ?>>I</option> 
-                            <option value="II" <?php echo ($semestre_usuario == 'II') ? 'selected' : ''; ?>>II</option>
-                            <option value="III" <?php echo ($semestre_usuario == 'III') ? 'selected' : ''; ?>>III</option>
-                            <option value="IV" <?php echo ($semestre_usuario == 'IV') ? 'selected' : ''; ?>>IV</option>
-                            <option value="V" <?php echo ($semestre_usuario == 'V') ? 'selected' : ''; ?>>V</option>
-                            <option value="VI" <?php echo ($semestre_usuario == 'VI') ? 'selected' : ''; ?>>VI</option>
-                            <option value="VII" <?php echo ($semestre_usuario == 'VII') ? 'selected' : ''; ?>>VII</option>
-                            <option value="VIII" <?php echo ($semestre_usuario == 'VIII') ? 'selected' : ''; ?>>VIII</option>
-                            <option value="IX" <?php echo ($semestre_usuario == 'IX') ? 'selected' : ''; ?>>IX</option>
-                            <option value="X" <?php echo ($semestre_usuario == 'X') ? 'selected' : ''; ?>>X</option>
+                            <option value="I" style="background-color: #3f4b4b; color: white;" <?php echo ($semestre_usuario == 'I') ? 'selected' : ''; ?>>I</option> 
+                            <option value="II" style="background-color: #3f4b4b; color: white;" <?php echo ($semestre_usuario == 'II') ? 'selected' : ''; ?>>II</option>
+                            <option value="III" style="background-color: #3f4b4b; color: white;" <?php echo ($semestre_usuario == 'III') ? 'selected' : ''; ?>>III</option>
+                            <option value="IV" style="background-color: #3f4b4b; color: white;" <?php echo ($semestre_usuario == 'IV') ? 'selected' : ''; ?>>IV</option>
+                            <option value="V" style="background-color: #3f4b4b; color: white;" <?php echo ($semestre_usuario == 'V') ? 'selected' : ''; ?>>V</option>
+                            <option value="VI" style="background-color: #3f4b4b; color: white;" <?php echo ($semestre_usuario == 'VI') ? 'selected' : ''; ?>>VI</option>
+                            <option value="VII" style="background-color: #3f4b4b; color: white;" <?php echo ($semestre_usuario == 'VII') ? 'selected' : ''; ?>>VII</option>
+                            <option value="VIII" style="background-color: #3f4b4b; color: white;" <?php echo ($semestre_usuario == 'VIII') ? 'selected' : ''; ?>>VIII</option>
+                            <option value="IX" style="background-color: #3f4b4b; color: white;" <?php echo ($semestre_usuario == 'IX') ? 'selected' : ''; ?>>IX</option>
+                            <option value="X" style="background-color: #3f4b4b; color: white;" <?php echo ($semestre_usuario == 'X') ? 'selected' : ''; ?>>X</option>
                         </select>
                     </div>
                     <button type="submit" name="update_profile" class="btn" style="background-color: #ee5d1c; border: none; color: white; padding: 10px 20px; border-radius: 20px; font-size: 1rem; font-weight: bold; cursor: pointer;">Guardar cambios</button>

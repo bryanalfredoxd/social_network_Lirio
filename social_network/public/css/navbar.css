@@ -5,6 +5,18 @@ body {
     padding: 0;
 }
 
+main {
+    margin-left: 250px; /* Ajusta esto al ancho de tu navbar */
+    padding: 20px; /* Opcional, para que no quede pegado */
+}
+
+.main-content {
+    margin-left: 70px !important; /* Deja espacio para el navbar */
+    padding: 20px;
+    width: calc(100% - 70px) !important; /* Ajusta el ancho del contenido */
+    overflow-x: hidden;
+}
+
 /* Estilo general para el navbar */
 .navbar {
     position: fixed; /* Fija la barra en la pantalla */
@@ -53,7 +65,7 @@ body {
 
 
 /* Cambios responsive */
-@media (max-width: 768px) {
+@media (max-width: 767.5px) {
     .navbar {
         top: auto;
         bottom: 0; /* Mueve el navbar a la parte inferior */
@@ -64,6 +76,11 @@ body {
         justify-content: space-around; /* Espaciado uniforme entre ítems */
         align-items: center;
         padding: 0;
+    }
+
+    .main-content {
+        margin-left: 0 !important; /* Elimina el margen en móviles */
+        margin-bottom: 80px !important; /* Espacio para la barra en la parte inferior */
     }
 
     .nav-item {

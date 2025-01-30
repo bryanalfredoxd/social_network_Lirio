@@ -37,6 +37,9 @@ require_once '../includes/config/database.php';
             transform: scale(1.1); /* Mantiene el tamaño al 110% al hacer foco */
             outline: none; /* Elimina el borde de enfoque predeterminado */
         }
+        .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+            max-width: 900px;
+        }
     </style>
 </head>
 <body style="background-color: #060808; color: white;"> <!-- Fondo general de la página -->

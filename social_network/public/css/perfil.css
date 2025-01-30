@@ -1,9 +1,10 @@
 
-
-
 body {
     background-color: #000;
     color: #fff;
+}
+element.style {
+    margin-left:none;
 }
 .profile-container {
     margin-top: 50px;
@@ -64,4 +65,26 @@ body {
 }
 .tab:hover {
     color: #ff6347;
+}
+@media (min-width: 1450px) {
+    .container-profile {
+        max-width: 900px;
+        margin: auto;
+    }
+}
+ /* Responsivo */
+ @media (max-width: 768px) {
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tabs .btn {
+        width: 80%;
+        text-align: center;
+    }
+
+    .content-section {
+        margin-top: 10px;
+    }
 }

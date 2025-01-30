@@ -1,8 +1,4 @@
-/* Estilos para ajustar las publicaciones */
-.post, .comentarios {
-    max-width: 600px; /* Limita el ancho del post */
-    margin: 10px auto; /* Centra las publicaciones en la página */
-}
+
 
 .post img {
     max-width: 100%; /* Ajusta el ancho de las imágenes al contenedor */
