@@ -13,9 +13,7 @@ $user_id = $_SESSION['id'];
 // archivo de conexión
 include('../includes/config/database.php');
 
-echo "<div id='comentarios-container' class='comentarios mt-4'>"; // Añade margen superior para separación
-echo "<h5 class='mb-3'><i class='bi bi-chat-dots me-2'></i>Comentarios:</h5>"; // Icono de comentarios
-
+echo "<div id='comentarios-container' class='comentarios'>"; // Añade margen superior para separación
 // Consulta para obtener los comentarios asociados a esta publicación
 $query_comentarios = "SELECT c.comentario, c.fecha_comentario, c.usuario_id, u.nombre, u.apellido, u.foto_perfil, c.proyecto_id
                       FROM comentarios c
@@ -47,7 +45,7 @@ if ($resultado_comentarios->num_rows > 0) {
         echo "</div>";
     }
 } else {
-    echo "<p class='text-muted'><i class='bi bi-info-circle me-2'></i>No has hecho comentarios aún.</p>"; // Mensaje con icono
+    echo "<p><i class='bi bi-info-circle me-2'></i>No has hecho comentarios aún.</p>"; // Mensaje con icono
 }
 
 echo "</div>"; // Cierra los comentarios

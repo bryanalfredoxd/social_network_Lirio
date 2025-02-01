@@ -13,11 +13,19 @@
         .container {
             max-width: 800px;
             margin: 20px auto;
-            background: #ffffff;
-            color: black;
+            background: #293737;
+            color: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .commentProfileCard > a {
+            color: #ee5d1c;
+            text-decoration: none;
+        }
+        .comentario {
+            background: #4a5757;
+            color: #fff;
         }
         .notificacion {
             display: flex;
@@ -67,10 +75,13 @@
             text-align: right;
         }
         .nuevo {
-            color: #e74c3c;
+            color: #ee5d1c;
             font-weight: bold;
             font-size: 0.85rem;
             margin-left: 5px;
+        }
+        .notificationOrangeColor, .notificationOrangeColor > * {
+            color: #ee5d1c;
         }
     </style>
 </head>
@@ -92,7 +103,7 @@
             <?php foreach ($notificaciones as $notificacion): ?>
                 <div class="comentario card mb-3 p-3">
                     <!-- Cabecera con foto y nombre -->
-                    <div class="d-flex align-items-center mb-2"> <!-- Flexbox para alinear foto y nombre -->
+                    <div class="d-flex align-items-center mb-2 commentProfileCard"> <!-- Flexbox para alinear foto y nombre -->
                         <!-- Foto de perfil -->
                         <?php if ($notificacion['origen_foto']): ?>
                             <img src="../uploads/<?php echo htmlspecialchars($notificacion['origen_foto']); ?>" alt="Foto de perfil" class="rounded-circle me-2" style="width: 40px; height: 40px;">
@@ -109,7 +120,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <p class="mb-1 flex-grow-1"><?php echo htmlspecialchars($notificacion['mensaje']); ?></p>
                         <!-- Icono según la acción -->
-                        <div class="notificacion-icono">
+                        <div class="notificacion-icono notificationOrangeColor">
                             <?php if ($notificacion['accion'] === 'Retweet'): ?>
                                 <i class="bi bi-arrow-repeat" style="font-size: 1.5rem;"></i>
                             <?php elseif ($notificacion['accion'] === 'Me gusta'): ?>
@@ -121,7 +132,7 @@
                     </div>
 
                     <!-- Fecha de la notificación -->
-                    <div class="text-muted small">
+                    <div class="notificationOrangeColor small">
                         <i class="bi bi-clock me-1"></i><?php echo htmlspecialchars($notificacion['fecha_notificacion']); ?>
                         <?php if (!$notificacion['leido']): ?>
                             <span class="nuevo">[Nuevo]</span>

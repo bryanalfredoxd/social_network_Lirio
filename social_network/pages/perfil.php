@@ -209,7 +209,7 @@ a {
 
 .post, .comentarios {
     max-width: 600px !important;
-    margin: 40px auto !important;
+    margin: 0px auto !important;
 }
 
 .notification-icon .badge {
@@ -284,7 +284,7 @@ a {
                 </a>
             </div>
         </div>
-        <form method="POST" class="tabs">
+        <form method="POST" class="tabs pb-3">
             <button type="submit" name="tab" value="posts" class="btn <?php if($buttonSelected == 'posts') echo 'btn-warning text-white' ?> tab">Publicaciones</button>
             <button type="submit" name="tab" value="comments" class="btn <?php if($buttonSelected == 'comments') echo 'btn-warning text-white' ?> tab">Comentarios</button>
             <button type="submit" name="tab" value="shared" class="btn <?php if($buttonSelected == 'shared') echo 'btn-warning text-white' ?> tab">Compartidos</button>
