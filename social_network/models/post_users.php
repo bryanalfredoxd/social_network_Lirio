@@ -77,7 +77,7 @@
                 echo "<div class='card-body'>";
 
                 // Sección del usuario (ahora clicable)
-                echo "<div class='align-items-center mb-2'>";
+                echo "<div class='postProfileCard align-items-center mb-2'>";
                 
                 // Envolvemos la imagen y nombre en un enlace a la página de perfil del usuario
                 echo "<a href='../pages/usuarios_perfil.php?usuario_id=" . $row['usuario_id'] . "'>";
@@ -91,7 +91,7 @@
                     // Título y descripción
                     echo "<h5 class='card-title'><i class='bi bi-card-heading'></i> " . htmlspecialchars($row['titulo']) . "</h5>";
                     echo "<p class='card-text'><i class='bi bi-text-left'></i> " . nl2br(htmlspecialchars($row['descripcion'])) . "</p>";
-                    echo "<p class='text-muted'><i class='bi bi-calendar'></i> Publicado el " . $row['fecha_publicacion'] . "</p>";
+                    echo "<p><i class='bi bi-calendar'></i> Publicado el " . $row['fecha_publicacion'] . "</p>";
 
                     // Categorías
                     if ($row['categorias']) {
@@ -103,7 +103,7 @@
                         echo "<h6><i class='bi bi-file-earmark'></i> Archivos:</h6>";
                         $archivos = explode(",", $row['archivos']);
                         foreach ($archivos as $archivo) {
-                            echo "<a href='$archivo' target='_blank' class='btn btn-link'><i class='bi bi-download'></i> Ver archivo</a><br>";
+                            echo "<a href='$archivo' target='_blank' class='postFileButton btn btn-link'><i class='bi bi-download'></i> Ver archivo</a><br>";
                         }
                     }
 
@@ -116,10 +116,9 @@
                         }
                     }
 
-                    echo "<p><i></i> <strong>_____________________________________________________________________________________</strong></p>";
 
                     // Botones de interacción (retweet, me gusta, comentarios)
-                    echo "<div class='d-flex align-items-center'>";
+                    echo "<div class='postActionButtonsContainer d-flex align-items-center'>";
 
                     // Verifica si el usuario ya ha retweeteado el post
                     $isRetweeted = $row['user_retweeted'] > 0 ? 'retweeted' : '';  // La clase 'retweeted' es para el color verde

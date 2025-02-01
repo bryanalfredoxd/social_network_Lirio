@@ -73,7 +73,7 @@ echo "<div class='post card mb-3' div-data-post-id='" . $row['id'] . "'>";
 echo "<div class='card-body'>";
 
 // Sección del usuario
-echo "<div class=' align-items-center mb-2'>";
+echo "<div class=' align-items-center mb-2 postProfileCard'>";
 echo "<img src='" . ($row['foto_perfil'] ? $row['foto_perfil'] : 'default_profile.jpg') . "' alt='Foto de perfil' class='rounded-circle me-2' style='width: 40px; height: 40px;'>";
 echo "<span><strong>" . htmlspecialchars($row['nombre']) . " " . htmlspecialchars($row['apellido']) . "</strong></span>";
 echo "</div>";
@@ -81,7 +81,7 @@ echo "</div>";
 // Título y descripción
 echo "<h5 class='card-title'><i class='bi bi-card-heading'></i> " . htmlspecialchars($row['titulo']) . "</h5>";
 echo "<p class='card-text'><i class='bi bi-text-left'></i> " . nl2br(htmlspecialchars($row['descripcion'])) . "</p>";
-echo "<p class='text-muted'><i class='bi bi-calendar'></i> Publicado el " . $row['fecha_publicacion'] . "</p>";
+echo "<p><i class='bi bi-calendar'></i> Publicado el " . $row['fecha_publicacion'] . "</p>";
 
 // Categorías
 if ($row['categorias']) {
@@ -93,7 +93,7 @@ if ($row['archivos']) {
     echo "<h6><i class='bi bi-file-earmark'></i> Archivos:</h6>";
     $archivos = explode(",", $row['archivos']);
     foreach ($archivos as $archivo) {
-        echo "<a href='$archivo' target='_blank' class='btn btn-link'><i class='bi bi-download'></i> Ver archivo</a><br>";
+        echo "<a href='$archivo' target='_blank' class='postFileButton'><i class='bi bi-download'></i> Ver archivo</a><br>";
     }
 }
 
@@ -105,11 +105,8 @@ if ($row['imagenes']) {
         echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto'><br>";
     }
 }
-
-echo "<p><i></i> <strong>_____________________________________________________________________________________</strong></p>";
-
 // Botones de interacción (retweet, me gusta, comentarios)
-echo "<div class='d-flex align-items-center'>";
+echo "<div class='d-flex align-items-center postActionButtonsContainer'>";
 
 // Verifica si el usuario ya ha retweeteado el post
 $isRetweeted = $row['user_retweeted'] > 0 ? 'retweeted' : '';  // La clase 'retweeted' es para el color verde

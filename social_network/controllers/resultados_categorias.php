@@ -1,8 +1,9 @@
-<link rel="stylesheet" href="../public/css/post_users.css">
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="../public/css/post_users.css">
+<link rel="stylesheet" href="../public/css/categories_results.css">
 
 <!-- Modal de comentario -->
 <div class="modal" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
@@ -28,65 +29,9 @@
   </div>
 </div>
 
-<style>
-
-    /* Botones generales */
-.retweet-btn, .like-btn, .comment-btn, .comment-btn2 {
-    background-color: transparent; /* Fondo transparente */
-    color: black; /* Color del texto */
-    border: none; /* Sin bordes visibles */
-    border-radius: 20px; /* Bordes redondeados */
-    padding: 5px 10px; /* Espaciado interno */
-    font-size: 14px; /* Tamaño de fuente */
-    transition: all 0.3s ease; /* Transición suave */
-}
-
-/* Estilo para el botón de retweet */
-.retweet-btn:hover {
-    background-color: rgba(0, 255, 0, 0.129); /* Fondo verde claro */
-    border: none; /* Sin bordes */
-    color: rgb(0, 255, 0); /* Texto verde */
-}
-
-.retweeted {
-    color: rgb(0, 255, 0); /* Texto verde */
-    background-color: rgba(0, 255, 0, 0.129); /* Fondo verde claro */
-}
-
-/* Estilo para los botones de "Me gusta" */
-.like-btn:hover {
-    background-color: rgba(255, 0, 0, 0.129); /* Fondo rojo claro */
-    border: none; /* Sin bordes */
-    color: rgb(255, 0, 0); /* Texto rojo */
-}
-
-.liked {
-    color: rgb(255, 0, 0); /* Texto rojo */
-    background-color: rgba(255, 0, 0, 0.129); /* Fondo rojo claro */
-}
-
-/* Estilo para los botones de comentarios */
-.comment-btn:hover, .comment-btn2:hover {
-    background-color: rgba(17, 0, 255, 0.129); /* Fondo azul claro */
-    color: rgb(17, 0, 255); /* Texto azul */
-    border: none; /* Sin bordes */
-}
-
-/* Alineación de los botones en una fila */
-.d-flex {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px; /* Espaciado entre los botones */
-    align-items: center;
-}
-
-.d-flex, .btn, .btn2 {
-    flex: 1; /* Asegura que los botones ocupen un espacio equitativo */
-}
-</style>
-
+<div class='container d-flex align-items-start justify-content-center py-4 w-100'>
 <?php
-    echo "<body>";
+    echo "<div class='categoriesResults card p-4'>";
 
         include '../includes/partials/navbar.php';
 
@@ -172,7 +117,7 @@ echo "<h2 class='text-center my-4'>Categoría: " . htmlspecialchars($categoria_n
                 echo "<div class='card-body'>";
 
                 // Sección del usuario
-                echo "<div class='align-items-center mb-2'>";
+                echo "<div class='align-items-center mb-2 postProfileCard'>";
                 echo "<a href='../pages/usuarios_perfil.php?usuario_id=" . $row['usuario_id'] . "'>";
                 echo "<img src='" . ($row['foto_perfil'] ? $row['foto_perfil'] : 'default_profile.jpg') . "' alt='Foto de perfil' class='rounded-circle me-2' style='width: 40px; height: 40px;'>";
                 echo "<span><strong>" . htmlspecialchars($row['nombre']) . " " . htmlspecialchars($row['apellido']) . "</strong></span>";
@@ -182,7 +127,7 @@ echo "<h2 class='text-center my-4'>Categoría: " . htmlspecialchars($categoria_n
                 // Título y descripción
                 echo "<h5 class='card-title'><i class='bi bi-card-heading'></i> " . htmlspecialchars($row['titulo']) . "</h5>";
                 echo "<p class='card-text'><i class='bi bi-text-left'></i> " . nl2br(htmlspecialchars($row['descripcion'])) . "</p>";
-                echo "<p class='text-muted'><i class='bi bi-calendar'></i> Publicado el " . $row['fecha_publicacion'] . "</p>";
+                echo "<p><i class='bi bi-calendar'></i> Publicado el " . $row['fecha_publicacion'] . "</p>";
 
                 // Categorías
                 if ($row['categorias']) {
@@ -194,7 +139,7 @@ echo "<h2 class='text-center my-4'>Categoría: " . htmlspecialchars($categoria_n
                     echo "<h6><i class='bi bi-file-earmark'></i> Archivos:</h6>";
                     $archivos = explode(",", $row['archivos']);
                     foreach ($archivos as $archivo) {
-                        echo "<a href='$archivo' target='_blank' class='btn btn-link'><i class='bi bi-download'></i> Ver archivo</a><br>";
+                        echo "<a href='$archivo' target='_blank' class='postFileButton'><i class='bi bi-download'></i> Ver archivo</a><br>";
                     }
                 }
 
@@ -206,11 +151,8 @@ echo "<h2 class='text-center my-4'>Categoría: " . htmlspecialchars($categoria_n
                         echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto'><br>";
                     }
                 }
-
-                    echo "<p><i></i> <strong>_____________________________________________________________________________________</strong></p>";
-
                     // Botones de interacción (retweet, me gusta, comentarios)
-                    echo "<div class='d-flex align-items-center'>";
+                    echo "<div class='d-flex align-items-center postActionButtonsContainer'>";
 
                     // Verifica si el usuario ya ha retweeteado el post
                     $isRetweeted = $row['user_retweeted'] > 0 ? 'retweeted' : '';  // La clase 'retweeted' es para el color verde
@@ -275,8 +217,9 @@ echo "<h2 class='text-center my-4'>Categoría: " . htmlspecialchars($categoria_n
             }
 
         $conn->close(); // Cierra la conexión
-    echo "</body>";
+    echo "</div>";
 ?>
+</div>
 
 <!--En este archivo se maneja el proceso de hacer retweet-->
 <script src="../public/js/retweet.js"></script>

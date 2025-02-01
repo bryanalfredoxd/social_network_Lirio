@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="../public/css/comments.css">
 <?php
 if (!isset($_SESSION)) {
   session_start();
@@ -42,7 +43,7 @@ if ($resultado_comentarios->num_rows > 0) {
         
         echo "</div>";
         echo "<p class='mb-1'>" . nl2br(htmlspecialchars($comentario['comentario'])) . "</p>";
-        echo "<p class='text-muted small'><i class='bi bi-clock me-1'></i>" . $comentario['fecha_comentario'] . "</p>"; // Icono de reloj
+        echo "<p class='commentDate small'><i class='bi bi-clock me-1'></i>" . $comentario['fecha_comentario'] . "</p>"; // Icono de reloj
         echo "</div>";
     }
 } else {

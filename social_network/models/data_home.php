@@ -34,19 +34,8 @@ $foto_perfil_path = !empty($user['foto_perfil']) ? $user['foto_perfil'] : '../pu
     <!-- Bootstrap CSS -->
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../public/css/home.css" rel="stylesheet">
     <style>
-        .profile-header {
-            border-top: 2px solid #ddd;
-            border-bottom: 2px solid #ddd;
-            padding: 10px 0;
-            margin-bottom: 20px;
-        }
-        .profile-picture {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
         .post-box {
             border: 1px solid #ddd;
             border-radius: 10px;
@@ -59,22 +48,24 @@ $foto_perfil_path = !empty($user['foto_perfil']) ? $user['foto_perfil'] : '../pu
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Encabezado del perfil -->
-        <div class="row justify-content-center">
-            <div class="col-md-8 text-center profile-header">
-                <img src="<?php echo htmlspecialchars($foto_perfil_path); ?>" alt="Foto de perfil" class="profile-picture">
-                <span class="h5 ms-2"><?php echo htmlspecialchars($nombre_completo); ?></span>
+    <div class="container d-flex align-items-center justify-content-center py-4 h-100 w-100">
+        <div class='card cardHome px-4'>
+            <h1 class="text-center pt-5">Bienvenido a la página de inicio</h1>
+            <p class="text-center">Aquí puedes ver las publicaciones de proyectos de otros usuarios.</p>
+            <!-- Encabezado del perfil -->
+            <div class="profileCard pb-5 justify-content-center">
+                <a href="../pages/publicar.php" class='btn'>Crear publicación</a>
+                <div class="col-md-8 text-center">
+                    <img src="<?php echo htmlspecialchars($foto_perfil_path); ?>" alt="Foto de perfil" class="profile-picture">
+                    <span class="h5 ms-2"><?php echo htmlspecialchars($nombre_completo); ?></span>
+                </div>
             </div>
-        </div>
+            <!-- Incluir los posts -->
+            <?php include("../models/post_users.php"); ?>
+        <div>
+    <div>
 
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Publicaciones de Proyectos</h1>
-
-        <!-- Incluir los posts -->
-        <?php include("../models/post_users.php"); ?>
-
-    </div>
+       
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -25,7 +25,6 @@ if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared'
 
     /* Estilo general para el body */
     body {
-        background-color: #2c3e50;
         color: white;
     }
 
@@ -149,7 +148,7 @@ if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared'
 
     /* Asegurarse de que el contenedor del perfil se vea bien */
     .profile-container {
-        background-color: #34495e;
+        background-color: #293737;
         border-radius: 10px;
         padding: 20px;
         margin-right: auto;

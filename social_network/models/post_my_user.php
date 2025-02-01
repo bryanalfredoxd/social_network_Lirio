@@ -80,7 +80,7 @@ echo "</div>";
 // Título y descripción
 echo "<h5 class='card-title'><i class='bi bi-card-heading'></i> " . htmlspecialchars($row['titulo']) . "</h5>";
 echo "<p class='card-text'><i class='bi bi-text-left'></i> " . nl2br(htmlspecialchars($row['descripcion'])) . "</p>";
-echo "<p class='text-muted'><i class='bi bi-calendar'></i> Publicado el " . $row['fecha_publicacion'] . "</p>";
+echo "<p><i class='bi bi-calendar'></i> Publicado el " . $row['fecha_publicacion'] . "</p>";
 
 // Categorías
 if ($row['categorias']) {
@@ -105,10 +105,8 @@ if ($row['imagenes']) {
     }
 }
 
-echo "<p><i></i> <strong>_____________________________________________________________________________________</strong></p>";
-
 // Botones de interacción (retweet, me gusta, comentarios)
-echo "<div class='d-flex align-items-center'>";
+echo "<div class='d-flex align-items-center postActionButtonsContainer'>";
 
 // Verifica si el usuario ya ha retweeteado el post
 $isRetweeted = $row['user_retweeted'] > 0 ? 'retweeted' : '';  // La clase 'retweeted' es para el color verde

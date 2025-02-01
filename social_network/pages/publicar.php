@@ -42,12 +42,12 @@ require_once '../includes/config/database.php';
         }
     </style>
 </head>
-<body style="background-color: #060808; color: white;"> <!-- Fondo general de la página -->
+<body style="background-color: #4a5757; color: white;"> <!-- Fondo general de la página -->
 
 <?php include("../includes/partials/navbar.php"); ?>
     <div class="container my-5" style="background-color: #293737; border-radius: 15px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); padding: 20px;">
         <h1 class="text-center mb-4" style="font-size: 2rem; font-weight: bold; color: #ee5d1c; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);">Publicar Proyecto</h1>
-        <form action="../controllers/procesar_publicacion.php" method="POST" enctype="multipart/form-data" class="border p-4 rounded shadow-sm">
+        <form action="../controllers/procesar_publicacion.php" method="POST" enctype="multipart/form-data" class="p-4 rounded">
             <div class="mb-3">
                 <label for="titulo" class="form-label" style="font-size: 1rem; color: white;">Título del Proyecto</label>
                 <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Título del Proyecto" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">

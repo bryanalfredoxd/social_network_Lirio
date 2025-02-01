@@ -21,8 +21,22 @@
     }
   }
 
-
+.searchContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.searchCard {
+  background-color: #293737;
+  max-height: 90vh;
+}
 /* Proyectos - Azul claro */
+#filterProjects {
+  background-color: #293737;
+  color: white;
+  border-color: #4a5757;
+}
 #filterProjects:hover {
   background-color: #17a2b8; /* Azul claro */
   color: white;
@@ -36,6 +50,11 @@
 }
 
 /* Categorías - Amarillo */
+#filterCategories {
+  background-color: #293737;
+  color: white;
+  border-color: #4a5757;
+}
 #filterCategories:hover {
   background-color: #ffc107; /* Amarillo */
   color: white;
@@ -49,6 +68,11 @@
 }
 
 /* Usuarios - Morado */
+#filterUsers {
+  background-color: #293737;
+  color: white;
+  border-color: #4a5757;
+}
 #filterUsers:hover {
   background-color: #860efd; /* Morado */
   color: white;
@@ -62,6 +86,11 @@
 }
 
 /* Retweet - Verde */
+#filterRetweets {
+  background-color: #293737;
+  color: white;
+  border-color: #4a5757;
+}
 #filterRetweets:hover {
   background-color: rgb(63, 224, 146); /* Verde */
   color: white;
@@ -75,6 +104,11 @@
 }
 
 /* Valorado - Rojo */
+#filterValuated {
+  background-color: #293737;
+  color: white;
+  border-color: #4a5757;
+}
 #filterValuated:hover {
   background-color: rgb(215, 68, 63); /* Rojo */
   color: white;
@@ -93,10 +127,10 @@
 
 
 
-<div class="container d-flex justify-content-center align-items-center min-vh-200">
-  <div class="card p-4 w-100" style="max-width: 1000px;">
+<div class="searchContainer container d-flex justify-content-center align-items-center min-vh-200">
+  <div class="searchCard card p-4 w-100" style="max-width: 80vw;">
     <div class="form-group">
-      <input type="text" class="form-control form-control-lg" placeholder="Buscar..." id="searchInput">
+      <input type="text" class="form-control form-control-lg searchBar" placeholder="Buscar..." id="searchInput">
     </div>
     <div class="filter-buttons">
       <button id="filterProjects" class="btn btn-outline-primary active" data-filter="projects">
@@ -244,7 +278,7 @@ function verDetalles(postId) {
             <div class="card-body d-flex align-items-center">
               <img src="${usuario.foto_perfil || 'https://via.placeholder.com/80'}" 
                    alt="Foto de ${usuario.nombre}" 
-                   class="img-thumbnail rounded-circle me-3"
+                   class="rounded-circle me-3"
                    style="width: 80px; height: 80px;">
               <div>
                 <h5 class="card-title">${usuario.nombre} ${usuario.apellido}</h5>
@@ -404,22 +438,21 @@ filterButtons.forEach(button => {
   #resultados {
     margin-top: 20px;
     padding: 15px;
-    border: 1px solid #ddd;
     border-radius: 10px;
-    background-color: #f8f9fa;
-    max-height: 550px; /* Scroll si hay demasiados resultados */
+    background-color: #293737;
+    min-height: 50vh;
+    max-height: 100%;
     overflow-y: auto;
   }
 
   /* Ajustar las tarjetas de los usuarios */
   .usuario-card, .categorias-card, .proyectos-card, .proyecto-card {
+    color: white;
     display: flex;
-    
     padding: 15px;
-    border: 1px solid #ddd;
     border-radius: 10px;
     margin-bottom: 15px;
-    background-color: white;
+    background-color: #4a5757;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
   }
@@ -435,6 +468,7 @@ filterButtons.forEach(button => {
     height: 80px;
     margin-right: 15px;
     object-fit: cover;
+    border: 5px solid #ee5d1c;
   }
 
   /* Texto de los usuarios */
@@ -445,6 +479,16 @@ filterButtons.forEach(button => {
 
   .usuario-card p {
     margin: 0;
-    color: #6c757d;
+    color: #ee5d1c;
+  }
+  .searchBar {
+    background-color: #293737;
+    color: white;
+    border-color: #4a5757;
+  }
+  .searchBar:active, .searchBar:focus {
+    background-color: #293737;
+    color: white;
+    border-color: #4a5757;
   }
 </style>

@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="../public/css/post_users.css">
+<link rel="stylesheet" href="../public/css/likes.css">
 
 <!-- Modal de comentario -->
 <div class="modal" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
@@ -24,10 +25,10 @@
   </div>
 </div>
 
-
+<div class='container d-flex align-items-start justify-content-center py-4 w-100'>
 <?php
 
-echo "<body>";
+echo "<div class='postLikes card p-4'>";
 
 include '../includes/partials/navbar.php';
 
@@ -78,7 +79,7 @@ if ($resultado->num_rows > 0) {
         echo "<div class='post card mb-3' onclick=\"window.location.href='../controllers/publicacion_detalle.php?post_id=" . $row['id'] . "'\" style='cursor: pointer;'>";
         echo "<div class='card-body'>";
 
-        echo "<div class='align-items-center mb-2'>";
+        echo "<div class='align-items-center mb-2 postProfileCard'>";
         echo "<a href='../pages/usuarios_perfil.php?usuario_id=" . $row['usuario_id'] . "'>";
         echo "<img src='" . ($row['foto_perfil'] ? $row['foto_perfil'] : 'default_profile.jpg') . "' alt='Foto de perfil' class='rounded-circle me-2' style='width: 40px; height: 40px;'>";
         echo "<span><strong>" . htmlspecialchars($row['nombre']) . " " . htmlspecialchars($row['apellido']) . "</strong></span>";
@@ -87,7 +88,7 @@ if ($resultado->num_rows > 0) {
 
         echo "<h5 class='card-title'><i class='bi bi-card-heading'></i> " . htmlspecialchars($row['titulo']) . "</h5>";
         echo "<p class='card-text'><i class='bi bi-text-left'></i> " . nl2br(htmlspecialchars($row['descripcion'])) . "</p>";
-        echo "<p class='text-muted'><i class='bi bi-calendar'></i> Publicado el " . $row['fecha_publicacion'] . "</p>";
+        echo "<p><i class='bi bi-calendar'></i> Publicado el " . $row['fecha_publicacion'] . "</p>";
 
         if ($row['categorias']) {
             echo "<p><i class='bi bi-tags'></i> <strong>Categorías:</strong> " . htmlspecialchars($row['categorias']) . "</p>";
@@ -97,7 +98,7 @@ if ($resultado->num_rows > 0) {
             echo "<h6><i class='bi bi-file-earmark'></i> Archivos:</h6>";
             $archivos = explode(",", $row['archivos']);
             foreach ($archivos as $archivo) {
-                echo "<a href='$archivo' target='_blank' class='btn btn-link'><i class='bi bi-download'></i> Ver archivo</a><br>";
+                echo "<a href='$archivo' target='_blank' class='postFileButton'><i class='bi bi-download'></i> Ver archivo</a><br>";
             }
         }
 
@@ -108,11 +109,8 @@ if ($resultado->num_rows > 0) {
                 echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto'><br>";
             }
         }
-
-                    echo "<p><i></i> <strong>_____________________________________________________________________________________</strong></p>";
-
                     // Botones de interacción (retweet, me gusta, comentarios)
-                    echo "<div class='d-flex align-items-center'>";
+                    echo "<div class='d-flex align-items-center postActionButtonsContainer'>";
 
                     // Verifica si el usuario ya ha retweeteado el post
                     $isRetweeted = $row['user_retweeted'] > 0 ? 'retweeted' : '';  // La clase 'retweeted' es para el color verde
@@ -177,8 +175,9 @@ if ($resultado->num_rows > 0) {
             }
 
         $conn->close(); // Cierra la conexión
-    echo "</body>";
+    echo "</div>";
 ?>
+</div>
 
 <!--En este archivo se maneja el proceso de hacer retweet-->
 <script src="../public/js/retweet.js"></script>

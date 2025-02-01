@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="../public/css/post_users.css">
+<link rel="stylesheet" href="../public/css/post_detail.css">
+<link rel="stylesheet" href="../public/css/comments.css">
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Bootstrap Icons -->
@@ -29,11 +31,11 @@
   </div>
 </div>
 
-
+<div class='container d-flex align-items-start justify-content-center py-4 w-100'>
 
 <?php
 
-echo"<body>";
+echo"<div class='postDetailCard card p-4'>";
 
 include '../includes/partials/navbar.php';
 
@@ -105,7 +107,7 @@ include '../includes/partials/navbar.php';
         echo "<div class='card-body'>";
 
         // Sección del usuario (ahora clicable)
-        echo "<div class='align-items-center mb-2'>";
+        echo "<div class='align-items-center mb-2 postProfileCard'>";
 
         // Envolvemos la imagen y nombre en un enlace a la página de perfil del usuario
         echo "<a href='../pages/usuarios_perfil.php?usuario_id=" . $row['usuario_id'] . "'>";
@@ -119,7 +121,7 @@ include '../includes/partials/navbar.php';
     // Título y descripción
     echo "<h5 class='card-title'>" . htmlspecialchars($titulo) . "</h5>";
     echo "<p class='card-text'>" . nl2br(htmlspecialchars($descripcion)) . "</p>";
-    echo "<p class='text-muted'>Publicado el " . $fecha_publicacion . "</p>";
+    echo "<p>Publicado el " . $fecha_publicacion . "</p>";
 
     // Categorías (sin duplicados)
     if ($categorias) {
@@ -130,7 +132,7 @@ include '../includes/partials/navbar.php';
     if ($archivos) {
         echo "<h6>Archivos:</h6>";
         foreach ($archivos as $archivo) {
-            echo "<a href='$archivo' target='_blank' class='btn btn-link'>Ver archivo</a><br>";
+            echo "<a href='$archivo' target='_blank' class='postFileButton'>Ver archivo</a><br>";
         }
     }
 
@@ -140,14 +142,8 @@ include '../includes/partials/navbar.php';
         echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto'><br>";
     }
 
-
-
-
-
-            echo "<p><i></i> <strong>_____________________________________________________________________________________</strong></p>";
-
             // Botones de interacción (retweet, me gusta, comentarios)
-            echo "<div class='d-flex align-items-center'>";
+            echo "<div class='d-flex align-items-center postActionButtonsContainer'>";
 
             // Verifica si el usuario ya ha retweeteado el post
             $isRetweeted = $row['user_retweeted'] > 0 ? 'retweeted' : '';  // La clase 'retweeted' es para el color verde
@@ -226,7 +222,7 @@ if ($resultado_comentarios->num_rows > 0) {
     while ($comentario = $resultado_comentarios->fetch_assoc()) {
         // Mostrar el comentario con la foto de perfil del usuario
         echo "<div class='comentario card mb-3 p-3'>"; // Uso de tarjeta de Bootstrap
-        echo "<div class='align-items-center mb-2'>"; // Flexbox para alinear icono y nombre
+        echo "<div class='postProfileCard align-items-center mb-2'>"; // Flexbox para alinear icono y nombre
         
         // Envolvemos la foto de perfil y el nombre en un enlace al perfil del usuario
         $foto_perfil = $comentario['foto_perfil'] ? $comentario['foto_perfil'] : '../images/profile-default.png'; // Foto por defecto si no tiene foto
@@ -237,18 +233,14 @@ if ($resultado_comentarios->num_rows > 0) {
         
         echo "</div>";
         echo "<p class='mb-1'>" . nl2br(htmlspecialchars($comentario['comentario'])) . "</p>";
-        echo "<p class='text-muted small'><i class='bi bi-clock me-1'></i>" . $comentario['fecha_comentario'] . "</p>"; // Icono de reloj
+        echo "<p class='commentDate small'><i class='bi bi-clock me-1'></i>" . $comentario['fecha_comentario'] . "</p>"; // Icono de reloj
         echo "</div>";
     }
 } else {
-    echo "<p class='text-muted'><i class='bi bi-info-circle me-2'></i>No hay comentarios aún.</p>"; // Mensaje con icono
+    echo "<p><i class='bi bi-info-circle me-2'></i>No hay comentarios aún.</p>"; // Mensaje con icono
 }
 
 echo "</div>"; // Cierra los comentarios
-
-
-
-            
 
         } else {
             echo "<p>Proyecto no encontrado.</p>";
@@ -259,7 +251,7 @@ echo "</div>"; // Cierra los comentarios
 
     $conn->close();
 
-echo"</body>";
+echo"</div>";
 
 ?>
 
