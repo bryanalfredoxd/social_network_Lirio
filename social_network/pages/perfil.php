@@ -218,6 +218,7 @@ a {
     right: -5px;
     padding: 0.3em 0.7em;
     font-size: 12px;
+    
 }
      /* Responsivo */
      @media (max-width: 768px) {

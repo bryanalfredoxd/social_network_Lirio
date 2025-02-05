@@ -63,7 +63,7 @@ require_once '../includes/config/database.php';
                      $query = "SELECT * FROM categorias";
                     $result = $conn->query($query);
                    while ($row = $result->fetch_assoc()) {
-                       echo "<option value='" . $row['id'] . "'>" . $row['nombre'] . "</option>";
+                       echo "<option style='color: black;' value='" . $row['id'] . "'>" . $row['nombre'] . "</option>";
                      }
                     ?>
                  </select>
