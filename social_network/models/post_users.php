@@ -1,17 +1,17 @@
 <link rel="stylesheet" href="../public/css/post_users.css">
 
 <!-- Modal de comentario -->
-<div class="modal" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+<div style="margin-top: 10%;" class="modal" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="commentModalLabel">Agregar Comentario</h5>
+        <h5 style="color: black;" class="modal-title" id="commentModalLabel">Agregar Comentario</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <!-- Título y Descripción del Proyecto -->
-        <h5 class="titulodeproyecto" id="projectTitle"></h5>
-        <p class="descripciondeproyecto" id="projectDescription"></p>
+        <h5 style="color: black;" class="titulodeproyecto" id="projectTitle"></h5>
+        <p style="color: black;" class="descripciondeproyecto" id="projectDescription"></p>
 
         <!-- Cuadro de Texto para Comentarios -->
         <textarea id="commentText" class="form-control" rows="3" placeholder="Escribe tu comentario..."></textarea>
@@ -73,8 +73,8 @@
             while ($row = $resultado->fetch_assoc()) {
                 
                 // Generación dinámica de publicaciones
-                echo "<div class='post card mb-3' onclick=\"window.location.href='../controllers/publicacion_detalle.php?post_id=" . $row['id'] . "'\" style='cursor: pointer;'>";
-                echo "<div class='card-body'>";
+                echo "<div style='max-width: 600px;' class='post card mb-3' onclick=\"window.location.href='../controllers/publicacion_detalle.php?post_id=" . $row['id'] . "'\" style='cursor: pointer;'>";
+                echo "<div  class='card-body'>";
 
                 // Sección del usuario (ahora clicable)
                 echo "<div class='postProfileCard align-items-center mb-2'>";

@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="../public/css/post_users.css">
 
 <!-- Modal de comentario -->
-<div class="modal" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+<div style="margin-top: 10%;" class="modal" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
