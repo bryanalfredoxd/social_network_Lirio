@@ -143,10 +143,10 @@
         <i class="bi bi-person"></i> Usuarios
       </button>
       <button id="filterRetweets" class="btn btn-outline-primary" data-filter="retweets">
-        <i class="bi bi-reply-all"></i> Retweets
+        <i class="bi bi-reply-all"></i> Compartidos
       </button>
       <button id="filterValuated" class="btn btn-outline-primary" data-filter="valuated">
-        <i class="bi bi-heart"></i> Valorado
+        <i class="bi bi-heart"></i> Valoraciones
       </button>
     </div>
     <br>
@@ -334,7 +334,7 @@ async function fetchRetweets(searchText) {
             <div class="card-body">
               <h5>${proyecto.titulo}</h5>
               <p class="card-text">${proyecto.descripcion}</p>
-              <small>Retweets: ${proyecto.retweet_count}</small>
+              <small>Compartidos: ${proyecto.retweet_count}</small>
             </div>
           </div>
         `)

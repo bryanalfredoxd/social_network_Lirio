@@ -350,7 +350,7 @@ a {
                             <option value="X" style="background-color: #3f4b4b; color: white;" <?php echo ($semestre_usuario == 'X') ? 'selected' : ''; ?>>X</option>
                         </select>
                     </div>
-                    <button type="submit" name="update_profile" class="btn" style="background-color: #ee5d1c; border: none; color: white; padding: 10px 20px; border-radius: 20px; font-size: 1rem; font-weight: bold; cursor: pointer;">Guardar cambios</button>
+                    <button type="submit" name="update_profile" class="btn" style="background-color: #ee5d1c; border: none; color: white; padding: 10px 20px; border-radius: 20px; font-size: 1rem; font-weight: bold; cursor: pointer; display: block; margin: 0 auto; text-align: center;">Guardar cambios</button>
                 </form>
             </div>
         </div>
