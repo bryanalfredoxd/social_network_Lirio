@@ -50,7 +50,7 @@ $foto_perfil_path = !empty($user['foto_perfil']) ? $user['foto_perfil'] : '../pu
 <body>
     <div class="container d-flex align-items-center justify-content-center py-4 h-100 w-100">
         <div class='card cardHome px-4'>
-            <h1 class="text-center pt-5">Bienvenido a la página de inicio</h1>
+            <h1 class="text-center pt-5">¡Bienvenido a la página de inicio!</h1>
             <p class="text-center">Aquí puedes ver las publicaciones de proyectos de otros usuarios.</p>
             <!-- Encabezado del perfil -->
             <div class="profileCard pb-5 justify-content-center">

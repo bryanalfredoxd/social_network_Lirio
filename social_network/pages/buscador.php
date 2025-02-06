@@ -1,3 +1,4 @@
+<title>Buscador</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <?php include("../includes/partials/navbar.php"); ?>
@@ -137,7 +138,7 @@
         <i class="bi bi-journal-text"></i> Proyectos
       </button>
       <button id="filterCategories" class="btn btn-outline-primary" data-filter="categories">
-        <i class="bi bi-tags"></i> Categorias
+        <i class="bi bi-tags"></i> Categorías
       </button>
       <button id="filterUsers" class="btn btn-outline-primary" data-filter="users">
         <i class="bi bi-person"></i> Usuarios
