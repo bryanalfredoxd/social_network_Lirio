@@ -5,7 +5,9 @@
     /* Cambié el fondo a un gradiente azul y verde */
     position: relative;
 }
-
+.text-primary {
+    color: #ee5d1c !important;
+}
 .login-bg::before {
     content: "";
     position: absolute;

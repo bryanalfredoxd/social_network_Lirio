@@ -165,7 +165,7 @@ if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared'
     }
 .notification-icon {
     position: relative;
-    font-size: 30px;
+    font-size: 40px;
 }
 a {
     color: #fafafa;

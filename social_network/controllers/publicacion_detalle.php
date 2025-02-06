@@ -6,6 +6,7 @@
 <!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
+<link rel="stylesheet" href="../pages/home.php">
 
 <!-- Modal de comentario -->
 <div class="modal" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
@@ -18,7 +19,7 @@
       <div class="modal-body">
         <!-- Título y Descripción del Proyecto -->
         <h5 class="titulodeproyecto" id="projectTitle"></h5>
-        <p class="descripciondeproyecto" id="projectDescription"></p>
+        <h6 class="descripciondeproyecto" id="projectDescription"></h6>
 
         <!-- Cuadro de Texto para Comentarios -->
         <textarea id="commentText" class="form-control" rows="3" placeholder="Escribe tu comentario..."></textarea>
