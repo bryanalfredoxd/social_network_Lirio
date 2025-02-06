@@ -111,14 +111,14 @@
                             <img src="../uploads/default.png" alt="Foto de perfil por defecto" class="rounded-circle me-2" style="width: 40px; height: 40px;">
                         <?php endif; ?>
                         <!-- Nombre del usuario -->
-                        <a href='../pages/usuarios_perfil.php?usuario_id=<?php echo $notificacion['origen_id']; ?>'>
+                        <a href='./usuarios_perfil.php?usuario_id=<?php echo $notificacion['usuario_id']; ?>'>
                             <strong><?php echo htmlspecialchars($notificacion['origen_nombre'] . ' ' . $notificacion['origen_apellido']); ?></strong>
                         </a>
                     </div>
 
                     <!-- Cuerpo con mensaje e icono -->
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <p class="mb-1 flex-grow-1"><?php echo htmlspecialchars($notificacion['mensaje']); ?></p>
+                        <p  class="mb-1 flex-grow-1"><?php echo htmlspecialchars($notificacion['mensaje']); ?></p>
                         <!-- Icono según la acción -->
                         <div class="notificacion-icono notificationOrangeColor">
                             <?php if ($notificacion['accion'] === 'Retweet'): ?>

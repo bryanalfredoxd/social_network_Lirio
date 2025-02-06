@@ -31,7 +31,7 @@
 
 <div class='container d-flex align-items-start justify-content-center py-4 w-100'>
 <?php
-    echo "<div class='categoriesResults card p-4'>";
+    echo "<div style='max-width: 800px' class='categoriesResults card p-4'>";
 
         include '../includes/partials/navbar.php';
 
@@ -148,7 +148,9 @@ echo "<h2 class='text-center my-4'>Categoría: " . htmlspecialchars($categoria_n
                     echo "<h6><i class='bi bi-image'></i> Imágenes:</h6>";
                     $imagenes = explode(",", $row['imagenes']);
                     foreach ($imagenes as $imagen) {
+                        echo "<div class='text-center'>"; // Agregar este contenedor
                         echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto'><br>";
+                        echo "</div>"; // Cerrar el contenedor
                     }
                 }
                     // Botones de interacción (retweet, me gusta, comentarios)

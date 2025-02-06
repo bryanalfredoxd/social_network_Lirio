@@ -33,9 +33,34 @@
 
 <div class='container d-flex align-items-start justify-content-center py-4 w-100'>
 
+<!-- Modal Imagen-->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImage" src="" class="img-fluid" alt="Imagen en Grande">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+function openImageModal(imageSrc) {
+    document.getElementById('modalImage').src = imageSrc;
+    var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+    imageModal.show();
+}
+</script>
+
+
 <?php
 
-echo"<div class='postDetailCard card p-4'>";
+echo"<div style='max-width: 800px' class='postDetailCard card p-4'>";
 
 include '../includes/partials/navbar.php';
 
@@ -119,13 +144,14 @@ include '../includes/partials/navbar.php';
         echo "</div>";
 
     // Título y descripción
-    echo "<h5 class='card-title'>" . htmlspecialchars($titulo) . "</h5>";
-    echo "<p class='card-text'>" . nl2br(htmlspecialchars($descripcion)) . "</p>";
-    echo "<p>Publicado el " . $fecha_publicacion . "</p>";
+    echo "<h5 class='card-title'><i class='bi bi-card-heading'></i> " . htmlspecialchars($titulo) . "</h5>";
+    echo "<p class='card-text'><i class='bi bi-text-left'></i> " . nl2br(htmlspecialchars($descripcion)) . "</p>";
+    echo "<p><i class='bi bi-calendar'></i> Publicado el " . htmlspecialchars($fecha_publicacion) . "</p>";
+
 
     // Categorías (sin duplicados)
     if ($categorias) {
-        echo "<p><strong>Categorías:</strong> " . htmlspecialchars($categorias) . "</p>";
+        echo "<p><i class='bi bi-tags'></i> <strong>Categorías:</strong> " . htmlspecialchars($categorias) . "</p>";
     }
 
     // Mostrar archivos relacionados
@@ -139,7 +165,9 @@ include '../includes/partials/navbar.php';
     // Mostrar solo una imagen relacionada
     if ($imagen) {
         echo "<h6>Imagen:</h6>";
-        echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto'><br>";
+        echo "<div class='text-center'>"; // Agregar este contenedor
+        echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto' onclick='event.stopPropagation(); openImageModal(\"$imagen\");'><br>";
+        echo "</div>"; // Cerrar el contenedor
     }
 
             // Botones de interacción (retweet, me gusta, comentarios)
@@ -232,7 +260,7 @@ if ($resultado_comentarios->num_rows > 0) {
         echo "</a>";
         
         echo "</div>";
-        echo "<p class='mb-1'>" . nl2br(htmlspecialchars($comentario['comentario'])) . "</p>";
+        echo "<p class='mb-1'><i class='bi bi-text-left'></i>" . nl2br(htmlspecialchars($comentario['comentario'])) . "</p>";
         echo "<p class='commentDate small'><i class='bi bi-clock me-1'></i>" . $comentario['fecha_comentario'] . "</p>"; // Icono de reloj
         echo "</div>";
     }

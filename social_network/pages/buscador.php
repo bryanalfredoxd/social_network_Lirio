@@ -334,7 +334,7 @@ async function fetchRetweets(searchText) {
             <div class="card-body">
               <h5>${proyecto.titulo}</h5>
               <p class="card-text">${proyecto.descripcion}</p>
-              <small>Me gusta: ${proyecto.retweet_count}</small>
+              <small>Retweets: ${proyecto.retweet_count}</small>
             </div>
           </div>
         `)

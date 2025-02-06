@@ -89,8 +89,8 @@ require_once '../includes/config/database.php';
             <div class="mb-3">
                 <label for="archivos" class="form-label" style="font-size: 1rem; color: white;">Subir Archivos Adjuntos</label>
                 <div class="input-group">
-                    <input type="file" name="archivos[]" id="archivos" class="custom-file-input" multiple style="display: none; background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 12px 20px; font-size: 1rem; cursor: pointer; width: 100%;">
-                    
+                    <input type="file" name="archivos[]" id="archivos" class="custom-file-input" multiple accept=".pdf" style="display: none; background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 12px 20px; font-size: 1rem; cursor: pointer; width: 100%;">
+
                     <div class="input-group-prepend">
                         <label class="btn btn-primary" for="archivos" style="border-radius: 10px; margin-right: 10px; background-color: #ee5d1c; border: 1px solid #ee5d1c; transition: background-color 0.3s, color 0.3s;">
                             Elegir Archivo
@@ -102,6 +102,7 @@ require_once '../includes/config/database.php';
                     </span>
                 </div>
             </div>
+
 
             <button type="submit" class="btn btn-publish" style="background-color: #ee5d1c; border: none; color: white; padding: 12px 20px; border-radius: 20px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; transition: background-color 0.3s ease, transform 0.3s ease;">
                 Publicar <i class="bi bi-upload"></i>

@@ -24,6 +24,29 @@
   </div>
 </div>
 
+<!-- Modal Imagen-->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+      
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImage" src="" class="img-fluid" alt="Imagen en Grande">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+function openImageModal(imageSrc) {
+    document.getElementById('modalImage').src = imageSrc;
+    var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+    imageModal.show();
+}
+</script>
 
 <?php
     if (!isset($_SESSION)) {
@@ -74,7 +97,8 @@
         while ($row = $resultado->fetch_assoc()) {
             
             // Generación dinámica de publicaciones
-echo "<div class='post card mb-3' div-data-post-id='" . $row['id'] . "'>";
+            echo "<br><div style='max-width: 800px; text-align: left;' class='post card mb-3' onclick=\"window.location.href='../controllers/publicacion_detalle.php?post_id=" . $row['id'] . "'\" style='cursor: pointer;'>";
+
 echo "<div class='card-body'>";
 
 // Sección del usuario
@@ -107,7 +131,9 @@ if ($row['imagenes']) {
     echo "<h6><i class='bi bi-image'></i> Imágenes:</h6>";
     $imagenes = explode(",", $row['imagenes']);
     foreach ($imagenes as $imagen) {
-        echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto'><br>";
+        echo "<div class='text-center'>"; // Agregar este contenedor
+        echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto' onclick='event.stopPropagation(); openImageModal(\"$imagen\");'><br>";
+        echo "</div>"; // Cerrar el contenedor
     }
 }
 // Botones de interacción (retweet, me gusta, comentarios)

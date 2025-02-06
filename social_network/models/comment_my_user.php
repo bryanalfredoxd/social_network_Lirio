@@ -29,7 +29,7 @@ $resultado_comentarios = $stmt_comentarios->get_result();
 if ($resultado_comentarios->num_rows > 0) {
     while ($comentario = $resultado_comentarios->fetch_assoc()) {
         // Mostrar el comentario con la foto de perfil del usuario
-        echo "<div class='comentario card mb-3 p-3' onclick=\"window.location.href='../controllers/publicacion_detalle.php?post_id=" . $comentario['proyecto_id'] . "'\" style='cursor: pointer;'>"; // Uso de tarjeta de Bootstrap
+        echo "<br><div style='text-align: left;' class='comentario card mb-3 p-3' onclick=\"window.location.href='../controllers/publicacion_detalle.php?post_id=" . $comentario['proyecto_id'] . "'\" style='cursor: pointer;'>"; // Uso de tarjeta de Bootstrap
         echo "<div class='align-items-center mb-2'>"; // Flexbox para alinear icono y nombre
         
         // Envolvemos la foto de perfil y el nombre en un enlace al perfil del usuario
@@ -40,7 +40,7 @@ if ($resultado_comentarios->num_rows > 0) {
         echo "</span>";
         
         echo "</div>";
-        echo "<p class='mb-1'>" . nl2br(htmlspecialchars($comentario['comentario'])) . "</p>";
+        echo "<p class='mb-1'><i class='bi bi-text-left'></i>" . nl2br(htmlspecialchars($comentario['comentario'])) . "</p>";
         echo "<p class='commentDate small'><i class='bi bi-clock me-1'></i>" . $comentario['fecha_comentario'] . "</p>"; // Icono de reloj
         echo "</div>";
     }

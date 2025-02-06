@@ -26,9 +26,34 @@
 </div>
 
 <div class='container d-flex align-items-start justify-content-center py-4 w-100'>
+
+<!-- Modal Imagen-->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel">Imagen en Grande</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImage" src="" class="img-fluid" alt="Imagen en Grande">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+function openImageModal(imageSrc) {
+    document.getElementById('modalImage').src = imageSrc;
+    var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+    imageModal.show();
+}
+</script>
+
 <?php
 
-echo "<div class='postLikes card p-4'>";
+echo "<div style='max-width: 800px' class='postLikes card p-4'>";
 
 include '../includes/partials/navbar.php';
 
@@ -106,7 +131,9 @@ if ($resultado->num_rows > 0) {
             echo "<h6><i class='bi bi-image'></i> Imágenes:</h6>";
             $imagenes = explode(",", $row['imagenes']);
             foreach ($imagenes as $imagen) {
-                echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto'><br>";
+                echo "<div class='text-center'>"; // Agregar este contenedor
+                echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto' onclick='event.stopPropagation(); openImageModal(\"$imagen\");'><br>";
+                echo "</div>"; // Cerrar el contenedor
             }
         }
                     // Botones de interacción (retweet, me gusta, comentarios)

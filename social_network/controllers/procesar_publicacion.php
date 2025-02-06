@@ -36,39 +36,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt->close();
 
-    // Manejo de imágenes
-    if (!empty($_FILES['imagenes']['name'][0])) {
-        foreach ($_FILES['imagenes']['tmp_name'] as $key => $tmp_name) {
-            $nombre_archivo = basename($_FILES['imagenes']['name'][$key]);
-            $ruta_destino = "../uploads/imagenes/" . $nombre_archivo;
+     // Manejar imágenes
+if (!empty($_FILES['imagenes']['name'][0])) {
+    foreach ($_FILES['imagenes']['tmp_name'] as $index => $tmpName) {
+        $nombreImagen = basename($_FILES['imagenes']['name'][$index]);
+        $rutaImagen = "../uploads/threads/images/images" . $nombreImagen; // ubicación donde se guarda el archivo
 
-            if (move_uploaded_file($tmp_name, $ruta_destino)) {
-                $stmt_img = $conn->prepare("INSERT INTO imagenes_proyectos (proyecto_id, imagen_url) VALUES (?, ?)");
-                if ($stmt_img) {
-                    $stmt_img->bind_param("is", $proyecto_id, $ruta_destino);
-                    $stmt_img->execute();
-                    $stmt_img->close();
-                }
-            }
+        
+        if (move_uploaded_file($tmpName, $rutaImagen)) {
+            $query_imagen = "INSERT INTO imagenes_proyectos (proyecto_id, imagen_url) 
+                             VALUES ('$proyecto_id', '$rutaImagen')";
+            $conn->query($query_imagen);
+        } else {
+            echo "Error al mover la imagen: $nombreImagen.";
         }
     }
+}
 
-    // Manejo de archivos adjuntos
-    if (!empty($_FILES['archivos']['name'][0])) {
-        foreach ($_FILES['archivos']['tmp_name'] as $key => $tmp_name) {
-            $nombre_archivo = basename($_FILES['archivos']['name'][$key]);
-            $ruta_destino = "../uploads/archivos/" . $nombre_archivo;
+// Manejar archivos adjuntos
+if (!empty($_FILES['archivos']['name'][0])) {
+    foreach ($_FILES['archivos']['tmp_name'] as $index => $tmpName) {
+        $nombreArchivo = basename($_FILES['archivos']['name'][$index]);
+        $rutaArchivo = "../uploads/threads/docs/docs" . $nombreArchivo; // ubicación donde se guarda el archivo
 
-            if (move_uploaded_file($tmp_name, $ruta_destino)) {
-                $stmt_archivo = $conn->prepare("INSERT INTO archivos_proyectos (proyecto_id, archivo_url) VALUES (?, ?)");
-                if ($stmt_archivo) {
-                    $stmt_archivo->bind_param("is", $proyecto_id, $ruta_destino);
-                    $stmt_archivo->execute();
-                    $stmt_archivo->close();
-                }
-            }
+        
+        if (move_uploaded_file($tmpName, $rutaArchivo)) {
+            $query_archivo = "INSERT INTO archivos_proyectos (proyecto_id, archivo_url) 
+                              VALUES ('$proyecto_id', '$rutaArchivo')";
+            $conn->query($query_archivo);
+        } else {
+            echo "Error al mover el archivo: $nombreArchivo.";
         }
     }
+}
+
 
     // Redirigir al archivo home.php después de completar el proceso
     header("Location: ../pages/home.php");
