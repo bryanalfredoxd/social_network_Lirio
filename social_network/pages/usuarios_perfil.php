@@ -83,7 +83,7 @@ if (isset($_GET['usuario_id'])) {
         height: 150px;
         border-radius: 50%;
         object-fit: cover;
-        border: 6px solid #0000004D !important;
+        border: 4px solid #ffffff;
         transition: all 0.3s ease-in-out;
     }
 

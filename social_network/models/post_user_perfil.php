@@ -11,7 +11,7 @@
       <div class="modal-body">
         <!-- Título y Descripción del Proyecto -->
         <h5 style="color: black;" class="titulodeproyecto" id="projectTitle"></h5>
-        <p style="color: black;" class="descripciondeproyecto" id="projectDescription"></p>
+        <p  class="descripciondeproyecto" id="projectDescription"></p>
 
         <!-- Cuadro de Texto para Comentarios -->
         <textarea id="commentText" class="form-control" rows="3" placeholder="Escribe tu comentario..."></textarea>

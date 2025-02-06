@@ -50,7 +50,7 @@ require_once '../includes/config/database.php';
         <form action="../controllers/procesar_publicacion.php" method="POST" enctype="multipart/form-data" class="p-4 rounded">
             <div class="mb-3">
                 <label for="titulo" class="form-label" style="font-size: 1rem; color: white;">Título del Proyecto</label>
-                <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Título del Proyecto..." required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
+                <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Título del Proyecto" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
             </div>
             <div class="mb-3">
                 <label for="descripcion" class="form-label" style="font-size: 1rem; color: white;">Descripción</label>

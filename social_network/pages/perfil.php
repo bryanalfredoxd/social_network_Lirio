@@ -263,7 +263,7 @@ a {
         <div class="profile-info">
             <h1><?php echo htmlspecialchars($nombre_usuario . ' ' . $apellido_usuario); ?></h1>
             <p><?php echo htmlspecialchars($correo_usuario); ?></p>
-            <p class="user-bio">¡Hola! soy <?php echo htmlspecialchars($nombre_usuario); ?>, estudiante de <?php echo htmlspecialchars($carrera_usuario); ?>, semestre <?php echo htmlspecialchars($semestre_usuario); ?>. Bienvenid@ a mi perfil.</p>
+            <p class="user-bio">¡Hola! soy <?php echo htmlspecialchars($nombre_usuario); ?>, estudiante de <?php echo htmlspecialchars($carrera_usuario); ?>, semestre <?php echo htmlspecialchars($semestre_usuario); ?>. Bienvenid@ a mi perfil</p>
 
             <div class="profile-buttons">
                 <!-- Botón para abrir la ventana modal de edición -->
@@ -350,7 +350,7 @@ a {
                             <option value="X" style="background-color: #3f4b4b; color: white;" <?php echo ($semestre_usuario == 'X') ? 'selected' : ''; ?>>X</option>
                         </select>
                     </div>
-                    <button type="submit" name="update_profile" class="btn" style="background-color: #ee5d1c; border: none; color: white; padding: 10px 20px; border-radius: 20px; font-size: 1rem; font-weight: bold; cursor: pointer;">Guardar cambios</button>
+                    <button type="submit" name="update_profile" class="btn" style="background-color: #ee5d1c; border: none; color: white; padding: 10px 20px; border-radius: 20px; font-size: 1rem; font-weight: bold; cursor: pointer; display: block; margin: 0 auto; text-align: center;">Guardar cambios</button>
                 </form>
             </div>
         </div>
