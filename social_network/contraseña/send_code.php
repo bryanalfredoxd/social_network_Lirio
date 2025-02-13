@@ -22,22 +22,25 @@ $fecha_expiracion = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
 try {
     // Verificar si el correo existe en la base de datos
-    $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE email = ?");
-    $stmt->execute([$email]);
-    $usuario = $stmt->fetch();
+    $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $usuario = $result->fetch_assoc();
 
     if (!$usuario) {
         echo json_encode(['success' => false, 'message' => 'Correo no encontrado.']);
         exit;
     }
 
-    // Guardar el código en la base de datos usando PDO
-    $stmt = $pdo->prepare("UPDATE usuarios SET codigo_recuperacion = ?, fecha_expiracion_codigo = ? WHERE email = ?");
-    $stmt->execute([$codigo, $fecha_expiracion, $email]);
+    // Guardar el código en la base de datos usando mysqli
+    $stmt = $conn->prepare("UPDATE usuarios SET codigo_recuperacion = ?, fecha_expiracion_codigo = ? WHERE email = ?");
+    $stmt->bind_param("sss", $codigo, $fecha_expiracion, $email);
+    $stmt->execute();
 
-    if ($stmt->rowCount() > 0) {
+    if ($stmt->affected_rows > 0) {
         // Configurar el correo electrónico
-        $subject = "Código de Verificación - Arse Solicitud";
+        $subject = "Código de Verificación - UneRed";
         $message = "
             <h1>Código de Verificación</h1>
             <p>Tu código de verificación para restablecer tu contraseña es:</p>
@@ -45,14 +48,14 @@ try {
             <p>Este código expirará en 1 hora.</p>
             <p>Si no fuiste tú quien solicitó este código, te recomendamos cambiar tu contraseña de inmediato para proteger tu cuenta.</p>
             <p>Atentamente,</p>
-            <p>Equipo de Soporte Arse Solicitud</p>
+            <p>Equipo de Soporte UneRed</p>
         ";
 
         // Cabeceras del correo
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $headers .= "From: Arse Solicitud <arsesolicitud@gmail.com>" . "\r\n";
-        $headers .= "Reply-To: no-reply@arsesolicitud.com" . "\r\n";
+        $headers .= "From: UneRed <uneredsupport@gmail.com>" . "\r\n";
+        $headers .= "Reply-To: no-reply@uneredsupport.com" . "\r\n";
         $headers .= "X-Mailer: PHP/" . phpversion();
 
         // Enviar el correo usando sendmail
