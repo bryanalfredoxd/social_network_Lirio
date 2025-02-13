@@ -178,7 +178,7 @@ function openImageModal(imageSrc) {
                     // Mostrar el botón de "Me gusta"
                     echo "<button class='btn like-btn d-flex align-items-center $likeButtonClass' data-user-id='$userId' data-post-id='$projectId' onclick='event.stopPropagation()'>
                         <i class='bi bi-heart me-1'></i> 
-                        <span class='like-count'>" . $likeCount . "</span>
+                        <span class='like-count'>" . $row['like_count'] . "</span>
                         <span class='like-text ms-1'>$likeButtonText</span>
                     </button>";
 

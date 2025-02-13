@@ -29,6 +29,30 @@
   </div>
 </div>
 
+<!-- Modal Imagen-->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+      
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImage" src="" class="img-fluid" alt="Imagen en Grande">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openImageModal(imageSrc) {
+    document.getElementById('modalImage').src = imageSrc;
+    var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+    imageModal.show();
+}
+</script>
+
+
 <div class='container d-flex align-items-start justify-content-center py-4 w-100'>
 <?php
     echo "<div style='max-width: 800px' class='categoriesResults card p-4'>";
@@ -149,12 +173,12 @@ echo "<h2 class='text-center my-4'>Categoría: " . htmlspecialchars($categoria_n
                     $imagenes = explode(",", $row['imagenes']);
                     foreach ($imagenes as $imagen) {
                         echo "<div class='text-center'>"; // Agregar este contenedor
-                        echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto'><br>";
+                        echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto' onclick='event.stopPropagation(); openImageModal(\"$imagen\");'><br>";
                         echo "</div>"; // Cerrar el contenedor
                     }
                 }
                     // Botones de interacción (retweet, me gusta, comentarios)
-                    echo "<div class='d-flex align-items-center postActionButtonsContainer'>";
+                    echo "<div class='d-flex align-items-center postActionButtonsContainer' onclick='event.stopPropagation();'>";
 
                     // Verifica si el usuario ya ha retweeteado el post
                     $isRetweeted = $row['user_retweeted'] > 0 ? 'retweeted' : '';  // La clase 'retweeted' es para el color verde
@@ -171,40 +195,49 @@ echo "<h2 class='text-center my-4'>Categoría: " . htmlspecialchars($categoria_n
                     $projectId = $row['id'];  // ID del proyecto
                     $userId = $user_id;  // ID del usuario (debería ser proporcionado dinámicamente)
 
-                    $sql = "SELECT COUNT(*) AS like_count FROM valoraciones WHERE proyecto_id = ? AND usuario_id = ? AND valoracion = 'Me gusta'";
+                    // Obtener el número total de likes del proyecto
+                    $sql = "SELECT COUNT(*) AS like_count FROM valoraciones WHERE proyecto_id = ? AND valoracion = 'Me gusta'";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("i", $projectId);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $rowLike = $result->fetch_assoc();
+                    $likeCount = $rowLike['like_count'];  // Número total de "Me gusta" del proyecto
+
+                    // Verificar si el usuario actual ha dado "Me gusta"
+                    $sql = "SELECT COUNT(*) AS user_like_count FROM valoraciones WHERE proyecto_id = ? AND usuario_id = ? AND valoracion = 'Me gusta'";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("ii", $projectId, $userId);
                     $stmt->execute();
                     $result = $stmt->get_result();
-                    $rowLike = $result->fetch_assoc();
-                    $likeCount = $rowLike['like_count'];  // Número de "Me gusta" del proyecto
-                    $hasLiked = $likeCount > 0;  // Si el usuario ya ha dado "Me gusta"
+                    $rowUserLike = $result->fetch_assoc();
+                    $hasLiked = $rowUserLike['user_like_count'] > 0;  // Si el usuario ya ha dado "Me gusta"
 
                     $likeButtonClass = $hasLiked ? 'liked' : '';  // Agregar clase 'liked' si el usuario ya dio "Me gusta"
                     $likeButtonText = $hasLiked ? '' : '';  // Texto dinámico para "Me gusta"
 
                     // Mostrar el botón de "Me gusta"
-                    echo "<button class='btn like-btn d-flex align-items-center $likeButtonClass' data-user-id='$userId' data-post-id='$projectId' onclick='event.stopPropagation()'>
+                    echo "<button class='btn like-btn d-flex align-items-center $likeButtonClass' data-user-id='$userId' data-post-id='$projectId'>
                         <i class='bi bi-heart me-1'></i> 
                         <span class='like-count'>" . $likeCount . "</span>
                         <span class='like-text ms-1'>$likeButtonText</span>
                     </button>";
 
                     // Lógica para obtener la cantidad de comentarios
-                    $sql = "SELECT COUNT(*) AS comment_count FROM comentarios WHERE proyecto_id = ?";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("i", $projectId);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $rowComment = $result->fetch_assoc();
-                    $commentCount = $rowComment['comment_count'];  // Número de comentarios del proyecto
+$sql = "SELECT COUNT(*) AS comment_count FROM comentarios WHERE proyecto_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $projectId);
+$stmt->execute();
+$result = $stmt->get_result();
+$rowComment = $result->fetch_assoc();
+$commentCount = $rowComment['comment_count'];  // Número de comentarios del proyecto
 
-                    // Mostrar el botón de comentarios
-                    echo "<button class='btn comment-btn2 d-flex align-items-center' data-post-id='$projectId' onclick='event.stopPropagation()'>
-                        <i class='bi bi-chat-left-text me-1'></i> 
-                        <span class='comment-count'>" . $commentCount . "</span>
-                        <span class='comment-text ms-1'></span>
-                    </button>";
+// Mostrar el botón de comentarios
+echo "<button class='btn comment-btn2 d-flex align-items-center' data-post-id='$projectId'>
+    <i class='bi bi-chat-left-text me-1'></i> 
+    <span class='comment-count'>" . $commentCount . "</span>
+    <span class='comment-text ms-1'></span>
+</button>";
 
                     echo "</div>"; // Cierra la fila de botones
                     echo "</div>"; // Cierra card-body

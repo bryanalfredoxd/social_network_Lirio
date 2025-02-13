@@ -137,7 +137,7 @@ if ($resultado->num_rows > 0) {
             }
         }
                     // Botones de interacción (retweet, me gusta, comentarios)
-                    echo "<div class='d-flex align-items-center postActionButtonsContainer'>";
+                    echo "<div class='d-flex align-items-center postActionButtonsContainer' onclick='event.stopPropagation();'>";
 
                     // Verifica si el usuario ya ha retweeteado el post
                     $isRetweeted = $row['user_retweeted'] > 0 ? 'retweeted' : '';  // La clase 'retweeted' es para el color verde
@@ -151,27 +151,36 @@ if ($resultado->num_rows > 0) {
                     </button>";
 
                     // Lógica para verificar si el usuario ha dado "Me gusta"
-                    $projectId = $row['id'];  // ID del proyecto
-                    $userId = $user_id;  // ID del usuario (debería ser proporcionado dinámicamente)
+$projectId = $row['id'];  // ID del proyecto
+$userId = $user_id;  // ID del usuario (debería ser proporcionado dinámicamente)
 
-                    $sql = "SELECT COUNT(*) AS like_count FROM valoraciones WHERE proyecto_id = ? AND usuario_id = ? AND valoracion = 'Me gusta'";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("ii", $projectId, $userId);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $rowLike = $result->fetch_assoc();
-                    $likeCount = $rowLike['like_count'];  // Número de "Me gusta" del proyecto
-                    $hasLiked = $likeCount > 0;  // Si el usuario ya ha dado "Me gusta"
+// Obtener el número total de likes del proyecto
+$sql = "SELECT COUNT(*) AS like_count FROM valoraciones WHERE proyecto_id = ? AND valoracion = 'Me gusta'";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $projectId);
+$stmt->execute();
+$result = $stmt->get_result();
+$rowLike = $result->fetch_assoc();
+$likeCount = $rowLike['like_count'];  // Número total de "Me gusta" del proyecto
 
-                    $likeButtonClass = $hasLiked ? 'liked' : '';  // Agregar clase 'liked' si el usuario ya dio "Me gusta"
-                    $likeButtonText = $hasLiked ? '' : '';  // Texto dinámico para "Me gusta"
+// Verificar si el usuario actual ha dado "Me gusta"
+$sql = "SELECT COUNT(*) AS user_like_count FROM valoraciones WHERE proyecto_id = ? AND usuario_id = ? AND valoracion = 'Me gusta'";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ii", $projectId, $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+$rowUserLike = $result->fetch_assoc();
+$hasLiked = $rowUserLike['user_like_count'] > 0;  // Si el usuario ya ha dado "Me gusta"
 
-                    // Mostrar el botón de "Me gusta"
-                    echo "<button class='btn like-btn d-flex align-items-center $likeButtonClass' data-user-id='$userId' data-post-id='$projectId' onclick='event.stopPropagation()'>
-                        <i class='bi bi-heart me-1'></i> 
-                        <span class='like-count'>" . $likeCount . "</span>
-                        <span class='like-text ms-1'>$likeButtonText</span>
-                    </button>";
+$likeButtonClass = $hasLiked ? 'liked' : '';  // Agregar clase 'liked' si el usuario ya dio "Me gusta"
+$likeButtonText = $hasLiked ? '' : '';  // Texto dinámico para "Me gusta"
+
+// Mostrar el botón de "Me gusta"
+echo "<button class='btn like-btn d-flex align-items-center $likeButtonClass' data-user-id='$userId' data-post-id='$projectId'>
+    <i class='bi bi-heart me-1'></i> 
+    <span class='like-count'>" . $likeCount . "</span>
+    <span class='like-text ms-1'>$likeButtonText</span>
+</button>";
 
                     // Lógica para obtener la cantidad de comentarios
                     $sql = "SELECT COUNT(*) AS comment_count FROM comentarios WHERE proyecto_id = ?";

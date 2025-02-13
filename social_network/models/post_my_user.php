@@ -64,24 +64,23 @@ function openImageModal(imageSrc) {
 
     // Consulta para obtener los proyectos (posts) junto con sus archivos, imágenes, valoraciones y categorías
     $query = "SELECT p.id, p.titulo, p.descripcion, p.fecha_publicacion, u.nombre, u.apellido, u.foto_perfil, 
-                        GROUP_CONCAT(a.archivo_url) AS archivos, 
-                        GROUP_CONCAT(i.imagen_url) AS imagenes, 
-                        AVG(v.valoracion) AS valoracion_promedio,
-                        GROUP_CONCAT(c.nombre) AS categorias,
-                        (SELECT COUNT(*) FROM retweets r WHERE r.proyecto_id = p.id) AS retweet_count,
-                        (SELECT COUNT(*) FROM retweets r WHERE r.proyecto_id = p.id AND r.usuario_id = $user_id) AS user_retweeted,
-                        (SELECT COUNT(*) FROM valoraciones v2 WHERE v2.proyecto_id = p.id AND v2.valoracion = 'Me gusta') AS like_count,
-                        (SELECT COUNT(*) FROM comentarios c2 WHERE c2.proyecto_id = p.id) AS comment_count  -- Subconsulta para contar los comentarios
-                FROM proyectos p
-                JOIN usuarios u ON p.usuario_id = u.id
-                LEFT JOIN archivos_proyectos a ON p.id = a.proyecto_id
-                LEFT JOIN imagenes_proyectos i ON p.id = i.proyecto_id
-                LEFT JOIN valoraciones v ON p.id = v.proyecto_id
-                LEFT JOIN proyectos_categorias pc ON p.id = pc.proyecto_id
-                LEFT JOIN categorias c ON pc.categoria_id = c.id
-                WHERE p.usuario_id = $user_id
-                GROUP BY p.id
-                ORDER BY p.fecha_publicacion DESC";
+       (SELECT GROUP_CONCAT(DISTINCT a.archivo_url) FROM archivos_proyectos a WHERE a.proyecto_id = p.id) AS archivos, 
+       (SELECT GROUP_CONCAT(DISTINCT i.imagen_url) FROM imagenes_proyectos i WHERE i.proyecto_id = p.id) AS imagenes, 
+       AVG(v.valoracion) AS valoracion_promedio,
+       (SELECT GROUP_CONCAT(DISTINCT c.nombre) 
+        FROM proyectos_categorias pc 
+        JOIN categorias c ON pc.categoria_id = c.id 
+        WHERE pc.proyecto_id = p.id) AS categorias,
+       (SELECT COUNT(*) FROM retweets r WHERE r.proyecto_id = p.id) AS retweet_count,
+       (SELECT COUNT(*) FROM retweets r WHERE r.proyecto_id = p.id AND r.usuario_id = $user_id) AS user_retweeted,
+       (SELECT COUNT(*) FROM valoraciones v2 WHERE v2.proyecto_id = p.id AND v2.valoracion = 'Me gusta') AS like_count,
+       (SELECT COUNT(*) FROM comentarios c2 WHERE c2.proyecto_id = p.id) AS comment_count
+          FROM proyectos p
+          JOIN usuarios u ON p.usuario_id = u.id
+          LEFT JOIN valoraciones v ON p.id = v.proyecto_id
+          WHERE p.usuario_id = $user_id
+          GROUP BY p.id
+          ORDER BY p.fecha_publicacion DESC";
 
 
     $resultado = $conn->query($query); 
@@ -92,13 +91,36 @@ function openImageModal(imageSrc) {
             
             // Generación dinámica de publicaciones
             echo "<br><div style='max-width: 800px; text-align: left;' class='post card mb-3' onclick=\"window.location.href='../controllers/publicacion_detalle.php?post_id=" . $row['id'] . "'\" style='cursor: pointer;'>";
-echo "<div class='card-body'>";
+            echo "<div class='card-body'>";
 
 // Sección del usuario
-echo "<div class=' align-items-center mb-2'>";
+echo "<div class='d-flex justify-content-between align-items-center mb-2'>"; // Contenedor flexible
+
+// Contenedor de imagen y nombre
+echo "<div class='d-flex align-items-center w-100'>"; 
 echo "<img src='" . ($row['foto_perfil'] ? $row['foto_perfil'] : 'default_profile.jpg') . "' alt='Foto de perfil' class='rounded-circle me-2' style='width: 40px; height: 40px;'>";
-echo "<span><strong>" . htmlspecialchars($row['nombre']) . " " . htmlspecialchars($row['apellido']) . "</strong></span>";
-echo "</div>";
+
+// Agregar un div alrededor del nombre para evitar que se alinee a la derecha
+echo "<div class='d-flex align-items-center flex-grow-1'>";
+echo "<span class='fw-bold'>" . htmlspecialchars($row['nombre']) . " " . htmlspecialchars($row['apellido']) . "</span>";
+echo "</div>"; // Cierra el div del nombre
+
+echo "</div>"; // Cierra el contenedor de la imagen y el nombre
+
+// Menú desplegable de tres puntos
+echo "<div class='dropdown' onclick='event.stopPropagation();'>";
+echo "<button class='btn btn-link text-decoration-none' type='button' id='dropdownMenuButton" . $row['id'] . "' data-bs-toggle='dropdown' aria-expanded='false'>";
+echo "<i class='bi bi-three-dots-vertical'></i>"; // Ícono de tres puntos
+echo "</button>";
+echo "<ul class='dropdown-menu dropdown-menu-end' aria-labelledby='dropdownMenuButton" . $row['id'] . "'>";
+echo "<li><a class='dropdown-item editar-btn' href='#' onclick='editarPublicacion(" . $row['id'] . ")'><i class='bi bi-pencil-square me-1'></i><span>Editar</span></a></li>"; // Opción Editar
+echo "<li><a class='dropdown-item eliminar-btn' href='#' onclick='eliminarPublicacion(" . $row['id'] . ")'><i class='bi bi-trash3-fill me-1'></i><span>Eliminar</span></a></li>"; // Opción Eliminar
+echo "</ul>";
+echo "</div>"; // Cierra el dropdown
+
+echo "</div>"; // Cierra el contenedor flexible
+
+
 
 // Título y descripción
 echo "<h5 class='card-title'><i class='bi bi-card-heading'></i> " . htmlspecialchars($row['titulo']) . "</h5>";
@@ -112,26 +134,26 @@ if ($row['categorias']) {
 
 // Mostrar archivos relacionados (si existen)
 if ($row['archivos']) {
-    echo "<h6><i class='bi bi-file-earmark'></i> Archivos:</h6>";
-    $archivos = explode(",", $row['archivos']);
-    foreach ($archivos as $archivo) {
-        echo "<a href='$archivo' target='_blank' class='btn btn-link'><i class='bi bi-download'></i> Ver archivo</a><br>";
-    }
+  echo "<h6><i class='bi bi-file-earmark'></i> Archivos:</h6>";
+  $archivos = explode(",", $row['archivos']);
+  foreach ($archivos as $archivo) {
+      echo "<a href='$archivo' target='_blank' onclick='event.stopPropagation();' class='postFileButton btn btn-link'><i class='bi bi-download'></i> Ver archivo</a><br>";
+  }
 }
 
 // Mostrar imágenes relacionadas (si existen)
 if ($row['imagenes']) {
-    echo "<h6><i class='bi bi-image'></i> Imágenes:</h6>";
-    $imagenes = explode(",", $row['imagenes']);
-    foreach ($imagenes as $imagen) {
-        echo "<div class='text-center'>"; // Agregar este contenedor
-        echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto' onclick='event.stopPropagation(); openImageModal(\"$imagen\");'><br>";
-        echo "</div>"; // Cerrar el contenedor
-    }
+  echo "<h6><i class='bi bi-image'></i> Imágenes:</h6>";
+  $imagenes = explode(",", $row['imagenes']);
+  foreach ($imagenes as $imagen) {
+      echo "<div class='text-center'>"; // Agregar este contenedor
+      echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto' onclick='event.stopPropagation(); openImageModal(\"$imagen\");'><br>";
+      echo "</div>"; // Cerrar el contenedor
+  }
 }
 
 // Botones de interacción (retweet, me gusta, comentarios)
-echo "<div class='d-flex align-items-center postActionButtonsContainer'>";
+echo "<div class='d-flex align-items-center postActionButtonsContainer' onclick='event.stopPropagation();'>";
 
 // Verifica si el usuario ya ha retweeteado el post
 $isRetweeted = $row['user_retweeted'] > 0 ? 'retweeted' : '';  // La clase 'retweeted' es para el color verde
@@ -161,9 +183,9 @@ $likeButtonClass = $hasLiked ? 'liked' : '';  // Agregar clase 'liked' si el usu
 $likeButtonText = $hasLiked ? '' : '';  // Texto dinámico para "Me gusta"
 
 // Mostrar el botón de "Me gusta"
-echo "<button class='btn like-btn d-flex align-items-center $likeButtonClass' data-user-id='$userId' data-post-id='$projectId'>
+echo "<button class='btn like-btn d-flex align-items-center $likeButtonClass' data-user-id='$userId' data-post-id='$projectId' onclick='event.stopPropagation()'>
     <i class='bi bi-heart me-1'></i> 
-    <span class='like-count'>" . $likeCount . "</span>
+    <span class='like-count'>" . $row['like_count'] . "</span>
     <span class='like-text ms-1'>$likeButtonText</span>
 </button>";
 
@@ -194,6 +216,52 @@ echo "</div>"; // Cierra post card
 
     $conn->close(); // Cierra la conexión
 ?>
+
+<script>
+
+  // Función para editar una publicación
+function editarPublicacion(postId) {
+    // Redirigir a la página de edición con el ID de la publicación
+    window.location.href = `../controllers/editar_publicacion.php?post_id=${postId}`;
+}
+
+// Función para eliminar una publicación
+function eliminarPublicacion(postId) {
+    if (confirm("¿Estás seguro de que deseas eliminar esta publicación?")) {
+        // Realizar una solicitud AJAX para eliminar la publicación
+        fetch(`../controllers/eliminar_publicacion.php?post_id=${postId}`, {
+            method: 'DELETE',
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Publicación eliminada correctamente.");
+                window.location.reload(); // Recargar la página para reflejar los cambios
+            } else {
+                alert("Error al eliminar la publicación: " + (data.error || "Inténtalo de nuevo."));
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+}
+
+</script>
+
+<style>
+  /* Cambiar color al pasar el mouse sobre el botón de Editar */
+.dropdown-item.editar-btn:hover,
+.dropdown-item.editar-btn:hover i,
+.dropdown-item.editar-btn:hover span {
+    color: green !important; /* Color verde */
+}
+
+/* Cambiar color al pasar el mouse sobre el botón de Eliminar */
+.dropdown-item.eliminar-btn:hover,
+.dropdown-item.eliminar-btn:hover i,
+.dropdown-item.eliminar-btn:hover span {
+    color: red !important; /* Color rojo */
+}
+</style>
 
 <!--En este archivo se maneja el proceso de hacer retweet-->
 <script src="../public/js/retweet.js"></script>

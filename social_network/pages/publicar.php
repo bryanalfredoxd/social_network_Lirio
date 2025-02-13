@@ -17,7 +17,7 @@ require_once '../includes/config/database.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Publicar Proyecto - UNERED</title>
+    <title>Publicar Proyecto - UneRed</title>
     <!-- Enlace a Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Enlace a los iconos de Bootstrap -->
@@ -50,14 +50,14 @@ require_once '../includes/config/database.php';
         <form action="../controllers/procesar_publicacion.php" method="POST" enctype="multipart/form-data" class="p-4 rounded">
             <div class="mb-3">
                 <label for="titulo" class="form-label" style="font-size: 1rem; color: white;">Título del Proyecto</label>
-                <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Título del Proyecto" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
+                <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Título del proyecto..." required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
             </div>
             <div class="mb-3">
                 <label for="descripcion" class="form-label" style="font-size: 1rem; color: white;">Descripción</label>
                 <textarea name="descripcion" id="descripcion" class="form-control" placeholder="Describe tu proyecto..." rows="4" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;"></textarea>
             </div>
             <div class="mb-3">
-                <label for="categorias" class="form-label" style="font-size: 1rem; color: white;">Selecciona Categorías</label>
+                <label for="categorias" class="form-label" style="font-size: 1rem; color: white;">Selecciona una Categoría</label>
                  <select name="categorias" id="categorias" class="form-select" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
                     <?php
                      $query = "SELECT * FROM categorias";

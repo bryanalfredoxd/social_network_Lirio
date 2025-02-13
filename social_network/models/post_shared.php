@@ -64,25 +64,24 @@ function openImageModal(imageSrc) {
 
     // Consulta para obtener los proyectos (posts) junto con sus archivos, imágenes, valoraciones y categorías
     $query = "SELECT p.id, p.titulo, p.descripcion, p.fecha_publicacion, u.nombre, u.apellido, u.foto_perfil, 
-                        GROUP_CONCAT(a.archivo_url) AS archivos, 
-                        GROUP_CONCAT(i.imagen_url) AS imagenes, 
-                        AVG(v.valoracion) AS valoracion_promedio,
-                        GROUP_CONCAT(c.nombre) AS categorias,
-                        (SELECT COUNT(*) FROM retweets r WHERE r.proyecto_id = p.id) AS retweet_count,
-                        (SELECT COUNT(*) FROM retweets r WHERE r.proyecto_id = p.id AND r.usuario_id = $user_id) AS user_retweeted,
-                        (SELECT COUNT(*) FROM valoraciones v2 WHERE v2.proyecto_id = p.id AND v2.valoracion = 'Me gusta') AS like_count,
-                        (SELECT COUNT(*) FROM comentarios c2 WHERE c2.proyecto_id = p.id) AS comment_count  -- Subconsulta para contar los comentarios
-                FROM retweets r
-                LEFT JOIN proyectos p ON p.id = r.proyecto_id
-                JOIN usuarios u ON p.usuario_id = u.id
-                LEFT JOIN archivos_proyectos a ON p.id = a.proyecto_id
-                LEFT JOIN imagenes_proyectos i ON p.id = i.proyecto_id
-                LEFT JOIN valoraciones v ON p.id = v.proyecto_id
-                LEFT JOIN proyectos_categorias pc ON p.id = pc.proyecto_id
-                LEFT JOIN categorias c ON pc.categoria_id = c.id
-                WHERE r.usuario_id = $user_id AND r.proyecto_id = p.id
-                GROUP BY p.id
-                ORDER BY p.fecha_publicacion DESC";
+                 (SELECT GROUP_CONCAT(DISTINCT a.archivo_url) FROM archivos_proyectos a WHERE a.proyecto_id = p.id) AS archivos, 
+                 (SELECT GROUP_CONCAT(DISTINCT i.imagen_url) FROM imagenes_proyectos i WHERE i.proyecto_id = p.id) AS imagenes, 
+                 AVG(v.valoracion) AS valoracion_promedio,
+                 (SELECT GROUP_CONCAT(DISTINCT c.nombre) 
+                  FROM proyectos_categorias pc 
+                  JOIN categorias c ON pc.categoria_id = c.id 
+                  WHERE pc.proyecto_id = p.id) AS categorias,
+                 (SELECT COUNT(*) FROM retweets r WHERE r.proyecto_id = p.id) AS retweet_count,
+                 (SELECT COUNT(*) FROM retweets r WHERE r.proyecto_id = p.id AND r.usuario_id = $user_id) AS user_retweeted,
+                 (SELECT COUNT(*) FROM valoraciones v2 WHERE v2.proyecto_id = p.id AND v2.valoracion = 'Me gusta') AS like_count,
+                 (SELECT COUNT(*) FROM comentarios c2 WHERE c2.proyecto_id = p.id) AS comment_count
+          FROM retweets r
+          LEFT JOIN proyectos p ON p.id = r.proyecto_id
+          JOIN usuarios u ON p.usuario_id = u.id
+          LEFT JOIN valoraciones v ON p.id = v.proyecto_id
+          WHERE r.usuario_id = $user_id AND r.proyecto_id = p.id
+          GROUP BY p.id
+          ORDER BY p.fecha_publicacion DESC";
 
 
     $resultado = $conn->query($query); 
@@ -131,7 +130,7 @@ if ($row['imagenes']) {
     }
 }
 // Botones de interacción (retweet, me gusta, comentarios)
-echo "<div class='d-flex align-items-center postActionButtonsContainer'>";
+echo "<div class='d-flex align-items-center postActionButtonsContainer' onclick='event.stopPropagation();'>";
 
 // Verifica si el usuario ya ha retweeteado el post
 $isRetweeted = $row['user_retweeted'] > 0 ? 'retweeted' : '';  // La clase 'retweeted' es para el color verde
@@ -148,14 +147,23 @@ echo "<button class='btn retweet-btn d-flex align-items-center $isRetweeted' dat
 $projectId = $row['id'];  // ID del proyecto
 $userId = $user_id;  // ID del usuario (debería ser proporcionado dinámicamente)
 
-$sql = "SELECT COUNT(*) AS like_count FROM valoraciones WHERE proyecto_id = ? AND usuario_id = ? AND valoracion = 'Me gusta'";
+// Obtener el número total de likes del proyecto
+$sql = "SELECT COUNT(*) AS like_count FROM valoraciones WHERE proyecto_id = ? AND valoracion = 'Me gusta'";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $projectId);
+$stmt->execute();
+$result = $stmt->get_result();
+$rowLike = $result->fetch_assoc();
+$likeCount = $rowLike['like_count'];  // Número total de "Me gusta" del proyecto
+
+// Verificar si el usuario actual ha dado "Me gusta"
+$sql = "SELECT COUNT(*) AS user_like_count FROM valoraciones WHERE proyecto_id = ? AND usuario_id = ? AND valoracion = 'Me gusta'";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ii", $projectId, $userId);
 $stmt->execute();
 $result = $stmt->get_result();
-$rowLike = $result->fetch_assoc();
-$likeCount = $rowLike['like_count'];  // Número de "Me gusta" del proyecto
-$hasLiked = $likeCount > 0;  // Si el usuario ya ha dado "Me gusta"
+$rowUserLike = $result->fetch_assoc();
+$hasLiked = $rowUserLike['user_like_count'] > 0;  // Si el usuario ya ha dado "Me gusta"
 
 $likeButtonClass = $hasLiked ? 'liked' : '';  // Agregar clase 'liked' si el usuario ya dio "Me gusta"
 $likeButtonText = $hasLiked ? '' : '';  // Texto dinámico para "Me gusta"

@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="../pages/home.php">
 
 <!-- Modal de comentario -->
-<div class="modal" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+<div style="margin-top: 10%;" class="modal" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -84,24 +84,24 @@ include '../includes/partials/navbar.php';
 
         // Consulta para obtener los detalles del proyecto (publicación)
         $query = "SELECT p.id, p.titulo, p.descripcion, p.fecha_publicacion, u.nombre, u.apellido, u.foto_perfil, 
-        GROUP_CONCAT(a.archivo_url) AS archivos, 
-        i.imagen_url AS imagen,  -- Seleccionar solo la primera imagen
-        AVG(v.valoracion) AS valoracion_promedio,
-        GROUP_CONCAT(c.nombre) AS categorias,
-        (SELECT COUNT(*) FROM retweets r WHERE r.proyecto_id = p.id) AS retweet_count,
-        (SELECT COUNT(*) FROM retweets r WHERE r.proyecto_id = p.id AND r.usuario_id = ?) AS user_retweeted,
-        (SELECT COUNT(*) FROM valoraciones v2 WHERE v2.proyecto_id = p.id AND v2.valoracion = 'Me gusta') AS like_count,
-        (SELECT COUNT(*) FROM comentarios c2 WHERE c2.proyecto_id = p.id) AS comment_count,  -- Subconsulta para contar los comentarios
-            u.id AS usuario_id  -- Añadir el id del usuario a la consulta
-            FROM proyectos p
-            JOIN usuarios u ON p.usuario_id = u.id
-            LEFT JOIN archivos_proyectos a ON p.id = a.proyecto_id
-            LEFT JOIN imagenes_proyectos i ON p.id = i.proyecto_id
-            LEFT JOIN valoraciones v ON p.id = v.proyecto_id
-            LEFT JOIN proyectos_categorias pc ON p.id = pc.proyecto_id
-            LEFT JOIN categorias c ON pc.categoria_id = c.id
-            WHERE p.id = ?
-            GROUP BY p.id";
+                 (SELECT GROUP_CONCAT(DISTINCT a.archivo_url) FROM archivos_proyectos a WHERE a.proyecto_id = p.id) AS archivos, 
+                 i.imagen_url AS imagen,  -- Seleccionar solo la primera imagen
+                 AVG(v.valoracion) AS valoracion_promedio,
+                 (SELECT GROUP_CONCAT(DISTINCT c.nombre) 
+                  FROM proyectos_categorias pc 
+                  JOIN categorias c ON pc.categoria_id = c.id 
+                  WHERE pc.proyecto_id = p.id) AS categorias,
+                 (SELECT COUNT(*) FROM retweets r WHERE r.proyecto_id = p.id) AS retweet_count,
+                 (SELECT COUNT(*) FROM retweets r WHERE r.proyecto_id = p.id AND r.usuario_id = ?) AS user_retweeted,
+                 (SELECT COUNT(*) FROM valoraciones v2 WHERE v2.proyecto_id = p.id AND v2.valoracion = 'Me gusta') AS like_count,
+                 (SELECT COUNT(*) FROM comentarios c2 WHERE c2.proyecto_id = p.id) AS comment_count,
+                 u.id AS usuario_id
+          FROM proyectos p
+          JOIN usuarios u ON p.usuario_id = u.id
+          LEFT JOIN imagenes_proyectos i ON p.id = i.proyecto_id
+          LEFT JOIN valoraciones v ON p.id = v.proyecto_id
+          WHERE p.id = ?
+          GROUP BY p.id";
 
         $stmt = $conn->prepare($query);
         $stmt->bind_param("ii", $user_id, $post_id);  // Se pasan ambos parámetros: el ID del usuario y el ID del proyecto
@@ -157,7 +157,7 @@ include '../includes/partials/navbar.php';
 
     // Mostrar archivos relacionados
     if ($archivos) {
-        echo "<h6>Archivos:</h6>";
+        echo "<h6><i class='bi bi-file-earmark'></i> Archivos:</h6>";
         foreach ($archivos as $archivo) {
             echo "<a href='$archivo' target='_blank' class='postFileButton'>Ver archivo</a><br>";
         }
@@ -165,7 +165,7 @@ include '../includes/partials/navbar.php';
 
     // Mostrar solo una imagen relacionada
     if ($imagen) {
-        echo "<h6>Imagen:</h6>";
+        echo "<h6><i class='bi bi-image'></i> Imágenes:</h6>";
         echo "<div class='text-center'>"; // Agregar este contenedor
         echo "<img src='$imagen' class='img-fluid mb-2' alt='Imagen del proyecto' onclick='event.stopPropagation(); openImageModal(\"$imagen\");'><br>";
         echo "</div>"; // Cerrar el contenedor
@@ -186,27 +186,36 @@ include '../includes/partials/navbar.php';
             </button>";
 
             // Lógica para verificar si el usuario ha dado "Me gusta"
-            $projectId = $row['id'];  // ID del proyecto
-            $userId = $user_id;  // ID del usuario (debería ser proporcionado dinámicamente)
+$projectId = $row['id'];  // ID del proyecto
+$userId = $user_id;  // ID del usuario (debería ser proporcionado dinámicamente)
 
-            $sql = "SELECT COUNT(*) AS like_count FROM valoraciones WHERE proyecto_id = ? AND usuario_id = ? AND valoracion = 'Me gusta'";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ii", $projectId, $userId);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $rowLike = $result->fetch_assoc();
-            $likeCount = $rowLike['like_count'];  // Número de "Me gusta" del proyecto
-            $hasLiked = $likeCount > 0;  // Si el usuario ya ha dado "Me gusta"
+// Obtener el número total de likes del proyecto
+$sql = "SELECT COUNT(*) AS like_count FROM valoraciones WHERE proyecto_id = ? AND valoracion = 'Me gusta'";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $projectId);
+$stmt->execute();
+$result = $stmt->get_result();
+$rowLike = $result->fetch_assoc();
+$likeCount = $rowLike['like_count'];  // Número total de "Me gusta" del proyecto
 
-            $likeButtonClass = $hasLiked ? 'liked' : '';  // Agregar clase 'liked' si el usuario ya dio "Me gusta"
-            $likeButtonText = $hasLiked ? '' : '';  // Texto dinámico para "Me gusta"
+// Verificar si el usuario actual ha dado "Me gusta"
+$sql = "SELECT COUNT(*) AS user_like_count FROM valoraciones WHERE proyecto_id = ? AND usuario_id = ? AND valoracion = 'Me gusta'";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ii", $projectId, $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+$rowUserLike = $result->fetch_assoc();
+$hasLiked = $rowUserLike['user_like_count'] > 0;  // Si el usuario ya ha dado "Me gusta"
 
-            // Mostrar el botón de "Me gusta"
-            echo "<button class='btn2 like-btn d-flex align-items-center $likeButtonClass' data-user-id='$userId' data-post-id='$projectId' onclick='event.stopPropagation()'>
-                <i class='bi bi-heart me-1'></i> 
-                <span class='like-count'>" . $likeCount . "</span>
-                <span class='like-text ms-1'>$likeButtonText</span>
-            </button>";
+$likeButtonClass = $hasLiked ? 'liked' : '';  // Agregar clase 'liked' si el usuario ya dio "Me gusta"
+$likeButtonText = $hasLiked ? '' : '';  // Texto dinámico para "Me gusta"
+
+// Mostrar el botón de "Me gusta"
+echo "<button class='btn2 like-btn d-flex align-items-center $likeButtonClass' data-user-id='$userId' data-post-id='$projectId' onclick='event.stopPropagation()'>
+    <i class='bi bi-heart me-1'></i> 
+    <span class='like-count'>" . $likeCount . "</span>
+    <span class='like-text ms-1'>$likeButtonText</span>
+</button>";
 
             // Lógica para obtener la cantidad de comentarios
             $sql = "SELECT COUNT(*) AS comment_count FROM comentarios WHERE proyecto_id = ?";
