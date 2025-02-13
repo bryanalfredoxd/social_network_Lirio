@@ -5,13 +5,15 @@ $data = json_decode(file_get_contents('php://input'), true);
 $code = $data['code'];
 
 try {
-    $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE codigo_recuperacion = ? AND fecha_expiracion_codigo > NOW()");
-    $stmt->execute([$code]);
-    $result = $stmt->fetchAll();
+    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE codigo_recuperacion = ? AND fecha_expiracion_codigo > NOW()");
+    $stmt->bind_param("s", $code);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $usuario = $result->fetch_assoc();
 
-    if (count($result) > 0) {
+    if ($usuario) {
         session_start();
-        $_SESSION['email_verificacion'] = $result[0]['correo'];
+        $_SESSION['email_verificacion'] = $usuario['email'];
         echo json_encode(['success' => true]);
     } else {
         echo json_encode(['success' => false, 'message' => 'Código incorrecto o expirado.']);
