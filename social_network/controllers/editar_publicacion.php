@@ -1,6 +1,5 @@
 
 
-
 <?php
 // Iniciar sesión
 if (!isset($_SESSION)) {
@@ -156,62 +155,168 @@ if (!empty($_FILES['archivos']['name'][0])) {
     <title>Editar Publicación</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* Estilos personalizados para el efecto de crecimiento */
+        input[type="file"]:hover + .input-group-prepend label,
+        button:hover {
+            transform: scale(1.1); /* Aumenta el tamaño al 110% */
+            transition: transform 0.3s ease-in-out; /* Hace que el efecto sea suave */
+        }
+
+        input[type="file"]:focus + .input-group-prepend label,
+        button:focus {
+            transform: scale(1.1); /* Mantiene el tamaño al 110% al hacer foco */
+            outline: none; /* Elimina el borde de enfoque predeterminado */
+        }
+
+        .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+            max-width: 900px;
+        }
+
+        /* Fondo general de la página */
+        body {
+            background-color: #4a5757;
+            color: white;
+        }
+
+        /* Estilo del formulario */
+        .form-container {
+            background-color: #293737;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+        }
+
+        /* Botón de "Publicar" */
+        .btn-publish {
+            background-color: #ee5d1c;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Botón de "Cancelar" */
+        .btn-cancel {
+            background-color: #555;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-cancel:hover {
+            background-color: #777;
+        }
+
+    </style>
 </head>
 <body>
 <?php include("../includes/partials/navbar.php");?>
-    <div class="container mt-5">
-        <h2 class="mb-4 text-center">Editar Publicación</h2>
-        <form action="editar_publicacion.php?post_id=<?= $post_id; ?>" method="POST" enctype="multipart/form-data">
+    <div class="container my-5 form-container">
+        <h1 class="text-center mb-4" style="font-size: 2rem; font-weight: bold; color: #ee5d1c; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);">Editar Publicación</h1>
+        <form action="editar_publicacion.php?post_id=<?= $post_id; ?>" method="POST" enctype="multipart/form-data" class="p-4 rounded">
             <div class="mb-3">
-                <label for="titulo" class="form-label">Título</label>
-                <input type="text" class="form-control" name="titulo" value="<?= htmlspecialchars($publicacion['titulo']) ?>" required>
+                <label for="titulo" class="form-label" style="font-size: 1rem; color: white;">Título del Proyecto</label>
+                <input type="text" class="form-control" name="titulo" value="<?= htmlspecialchars($publicacion['titulo']) ?>" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
             </div>
             <div class="mb-3">
-                <label for="descripcion" class="form-label">Descripción</label>
-                <textarea class="form-control" name="descripcion" rows="4" required><?= htmlspecialchars($publicacion['descripcion']) ?></textarea>
+                <label for="descripcion" class="form-label" style="font-size: 1rem; color: white;">Descripción</label>
+                <textarea class="form-control" name="descripcion" rows="4" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;"><?= htmlspecialchars($publicacion['descripcion']) ?></textarea>
             </div>
             <div class="mb-3">
-                <label for="categorias" class="form-label">Categorías</label>
-                <select class="form-select" name="categorias[]" multiple required>
-                    <?php while ($fila = $resultado_todas_categorias->fetch_assoc()) { ?>
-                        <option value="<?= $fila['id'] ?>" <?= in_array($fila['id'], $categorias_seleccionadas) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($fila['nombre']) ?>
-                        </option>
-                    <?php } ?>
-                </select>
+                <label for="categorias" class="form-label" style="font-size: 1rem; color: white;">Selecciona una Categoría</label>
+                 <select name="categorias" id="categorias" class="form-select" required style="background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 10px;">
+                    <?php
+                     $query = "SELECT * FROM categorias";
+                    $result = $conn->query($query);
+                   while ($row = $result->fetch_assoc()) {
+                    echo "<option style='color: white; background-color:#3f4b4b;' value='" . $row['id'] . "'>" . $row['nombre'] . "</option>";
+                     }
+                    ?>
+                 </select>
             </div>
+            
+            <!-- Imágenes Actuales -->
             <div class="mb-3">
-                <label class="form-label">Imágenes Actuales</label>
+                <label class="form-label" style="font-size: 1rem; color: white;">Imágenes Actuales</label>
                 <div class="d-flex flex-wrap">
                     <?php while ($imagen = $resultado_imagenes->fetch_assoc()) { ?>
-                        <img src="<?= $imagen['imagen_url'] ?>" class="img-thumbnail m-1" width="100" height="100">
+                        <div class="m-1">
+                            <img src="<?= $imagen['imagen_url'] ?>" alt="Imagen Actual" class="img-thumbnail" style="max-width: 150px; max-height: 150px;">
+                        </div>
                     <?php } ?>
                 </div>
             </div>
+
+            <!-- Archivos Actuales -->
             <div class="mb-3">
-                <label for="imagenes" class="form-label">Subir Nuevas Imágenes</label>
-                <input type="file" class="form-control" name="imagenes[]" multiple>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Archivos Actuales</label>
+                <label class="form-label" style="font-size: 1rem; color: white;">Archivos Actuales</label>
                 <ul class="list-group">
                     <?php while ($archivo = $resultado_archivos->fetch_assoc()) { ?>
-                        <li class="list-group-item">
-                            <i class="bi bi-file-earmark"></i> <a href="<?= $archivo['archivo_url'] ?>" target="_blank">Descargar</a>
+                        <li class="list-group-item" style="background-color: rgba(255, 255, 255, 0.1); color: white;">
+                            <a href="<?= $archivo['archivo_url'] ?>" class="text-white" target="_blank"><?= htmlspecialchars($archivo['nombre_archivo']) ?></a>
                         </li>
                     <?php } ?>
                 </ul>
             </div>
+
+            <!-- Subir Nuevas Imágenes -->
             <div class="mb-3">
-                <label for="archivos" class="form-label">Subir Nuevos Archivos</label>
-                <input type="file" class="form-control" multiple accept=".pdf" name="archivos[]" multiple>
+                <label for="imagenes" class="form-label" style="font-size: 1rem; color: white;">Subir Imágenes</label>
+                <div class="input-group">
+                    <input type="file" name="imagenes[]" id="imagenes" class="custom-file-input" multiple accept="image/*" style="display: none; background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 12px 20px; font-size: 1rem; cursor: pointer; width: 100%;">
+                    
+                    <div class="input-group-prepend">
+                        <label class="btn btn-primary" for="imagenes" style="border-radius: 10px; margin-right: 10px; background-color: #ee5d1c; border: 1px solid #ee5d1c; transition: background-color 0.3s, color 0.3s;">
+                            Elegir Imágenes
+                        </label>
+                    </div>
+                    
+                    <span class="input-group-text flex-grow-1" id="file-name" style="border-radius: 10px; background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+                        Sin archivos seleccionados
+                    </span>
+                </div>
             </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                <a href="../pages/perfil.php" class="btn btn-secondary">Cancelar</a>
+
+            <!-- Subir Nuevos Archivos -->
+            <div class="mb-3">
+                <label for="archivos" class="form-label" style="font-size: 1rem; color: white;">Subir Archivos Adjuntos</label>
+                <div class="input-group">
+                    <input type="file" name="archivos[]" id="archivos" class="custom-file-input" multiple accept=".pdf" style="display: none; background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; border-radius: 10px; padding: 12px 20px; font-size: 1rem; cursor: pointer; width: 100%;">
+
+                    <div class="input-group-prepend">
+                        <label class="btn btn-primary" for="archivos" style="border-radius: 10px; margin-right: 10px; background-color: #ee5d1c; border: 1px solid #ee5d1c; transition: background-color 0.3s, color 0.3s;">
+                            Elegir Archivo
+                        </label>
+                    </div>
+                    
+                    <span class="input-group-text flex-grow-1" id="file-name-archivos" style="border-radius: 10px; background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white;">
+                        Sin archivos seleccionados
+                    </span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+            <button type="submit" class="btn btn-publish" style="background-color: #ee5d1c; border: none; color: white; padding: 12px 20px; border-radius: 20px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; transition: background-color 0.3s ease, transform 0.3s ease;">
+                Guardar Cambios <i class="bi bi-upload"></i>
+            </button>
+            </div>
+            <div class="mb-3">
+                <a href="javascript:history.back()" class="btn btn-cancel">Cancelar</a>
             </div>
         </form>
     </div>
+
 </body>
 </html>
-
