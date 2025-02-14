@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_check->execute();
         $stmt_check->store_result();
         if ($stmt_check->num_rows > 0) {
-            echo "El correo electrónico ya está en uso.";
+            echo "<script>alert('El correo electrónico ya está en uso.'); window.location.href = '../index.html';</script>";
         } else {
             // Prepara y ejecuta la consulta SQL para insertar el usuario
             $sql = "INSERT INTO usuarios (nombre, apellido, email, contrasena, carrera, semestre, foto_perfil) VALUES (?, ?, ?, ?, ?, ?, ?)";
