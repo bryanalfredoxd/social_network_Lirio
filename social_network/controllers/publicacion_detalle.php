@@ -14,7 +14,11 @@
     flex-grow: 1;
     width: 100%;
 }
+.p-4  {
 
+padding-bottom: 3rem !important;
+
+}
 
 </style>
 

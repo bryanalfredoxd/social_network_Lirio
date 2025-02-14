@@ -62,7 +62,7 @@ p {
     cursor: pointer;
     border-radius: 5px;
     transition: background 0.3s;
-    margin-top: 10px;
+    margin-top: 30px;
 }
 
 .btn button:hover {

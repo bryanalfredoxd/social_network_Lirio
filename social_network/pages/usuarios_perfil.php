@@ -43,6 +43,8 @@ if (isset($_GET['usuario_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <meta name="description" content="Perfil de Usuario">
     <title>Perfil de Usuario</title>
     <!-- Bootstrap CSS -->
@@ -54,6 +56,12 @@ if (isset($_GET['usuario_id'])) {
     /* Estilo general para el body */
     body {
         color: white;
+    }
+
+    .profile-container {
+
+         padding-bottom: 5rem !important;
+
     }
 
     /* Estilo para los botones */
@@ -270,7 +278,7 @@ a {
     <!-- Barra lateral izquierda de navegación -->
     <?php include("../includes/partials/navbar.php"); ?>
 
-    <div class="container profile-container" style="margin-left: 100px;">
+    <div class="container profile-container" >
         <!-- Imagen de perfil -->
         <img src="<?php echo htmlspecialchars($foto_perfil); ?>" alt="Foto de perfil" class="profile-pic">
 

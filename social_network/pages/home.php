@@ -12,6 +12,11 @@
 </head>
 <style>
 
+.px-4 {
+
+  padding-bottom: 3rem;
+
+}
 .modal {
   color: white !important;
 }

@@ -17,9 +17,7 @@ if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared'
     <title>Perfil de Usuario</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="../public/css/perfil.css">
-
     <style>
 
 
@@ -160,6 +158,7 @@ if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared'
         padding: 20px;
         margin-right: auto;
         margin-left: auto;
+        padding-bottom: 5rem !important;
     }
 
     /* Estilo para el contenedor de select */

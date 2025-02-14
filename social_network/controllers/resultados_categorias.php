@@ -4,6 +4,17 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="../public/css/post_users.css">
 <link rel="stylesheet" href="../public/css/categories_results.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+.justify-content-center > * {
+    flex-grow: 1;
+    width: 100%;
+}
+
+  
+</style>
 
 <!-- Modal de comentario -->
 <div class="modal" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">

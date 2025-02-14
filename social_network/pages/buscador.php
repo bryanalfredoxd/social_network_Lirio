@@ -8,6 +8,10 @@
     color: black;
   }
 
+  .p-4 {
+    padding-bottom: 3rem !important;
+  }
+
   .filter-buttons {
     display: flex;
     flex-wrap: wrap;
