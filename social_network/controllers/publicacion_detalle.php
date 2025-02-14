@@ -165,12 +165,13 @@ include '../includes/partials/navbar.php';
         echo "<p><i class='bi bi-tags'></i> <strong>Categorías:</strong> " . htmlspecialchars($categorias) . "</p>";
     }
 
-    // Mostrar archivos relacionados
-    if ($archivos) {
-        echo "<h6><i class='bi bi-file-earmark'></i> Archivos:</h6>";
-        foreach ($archivos as $archivo) {
-            echo "<a href='$archivo' target='_blank' class='postFileButton'>Ver archivo</a><br>";
-        }
+    // Mostrar archivos relacionados (si existen)
+    if ($row['archivos']) {
+      echo "<h6><i class='bi bi-file-earmark'></i> Archivos:</h6>";
+      $archivos = explode(",", $row['archivos']);
+      foreach ($archivos as $archivo) {
+          echo "<a href='$archivo' target='_blank' onclick='event.stopPropagation();' class='postFileButton btn btn-link'><i class='bi bi-download'></i> Ver archivo</a><br>";
+      }
     }
 
     // Mostrar solo una imagen relacionada
