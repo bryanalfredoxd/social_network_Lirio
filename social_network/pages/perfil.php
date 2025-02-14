@@ -28,6 +28,13 @@ if(isset($_POST["tab"]) && $_POST["tab"] == 'shared') $buttonSelected = 'shared'
         color: white;
     }
 
+    .btn-link {
+
+        --bs-link-color: #ee5d1c;
+        --bs-btn-hover-color: #ee5d1c;
+        --bs-btn-active-color: #ee5d1c;
+    }
+
     /* Estilo para los botones */
     .btn-custom, .btn-custom-sesion {
         background-color: #ee5d1c; /* Naranja */

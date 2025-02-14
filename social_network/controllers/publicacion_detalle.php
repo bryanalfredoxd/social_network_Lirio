@@ -1,12 +1,22 @@
 <link rel="stylesheet" href="../public/css/post_users.css">
 <link rel="stylesheet" href="../public/css/post_detail.css">
 <link rel="stylesheet" href="../public/css/comments.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
 <link rel="stylesheet" href="../pages/home.php">
+
+<style>
+
+.justify-content-center > * {
+    flex-grow: 1;
+    width: 100%;
+}
+
+
+</style>
 
 <!-- Modal de comentario -->
 <div style="margin-top: 10%;" class="modal" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
