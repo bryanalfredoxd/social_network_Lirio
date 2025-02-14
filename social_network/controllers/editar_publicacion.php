@@ -1,4 +1,5 @@
 
+
 <?php
 // Iniciar sesión
 if (!isset($_SESSION)) {
@@ -217,52 +218,6 @@ if (!empty($_FILES['archivos']['name'][0])) {
         .btn-cancel:hover {
             background-color: #777;
         }
-        /* Cambios responsive */
-@media (max-width: 767.5px)  {
-    .navbar {
-        top: auto;
-        bottom: 0; /* Mueve el navbar a la parte inferior */
-        left: 0;
-        height: 70px; /* Reduce la altura del navbar */
-        width: 100%; /* Ocupa todo el ancho de la pantalla */
-        flex-direction: row !important; /* Cambia a una fila horizontal */
-        justify-content: space-around; /* Espaciado uniforme entre ítems */
-        align-items: center;
-        padding: 0;
-    }
-
-    .navbar-nav {
-        width: 100%;
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        display: flex;
-        flex-direction: row !important;
-    }
-    .main-content {
-        margin-left: 0 !important; /* Elimina el margen en móviles */
-        margin-bottom: 80px !important; /* Espacio para la barra en la parte inferior */
-    }
-
-    .nav-item {
-        margin: 0; /* Elimina márgenes extra */
-    }
-
-    .nav-link {
-        font-size: 1.8rem; /* Íconos ligeramente más pequeños en móviles */
-    }
-}
-@media (max-width: 1100px)  {
-    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-            max-width: 700px;
-        }
-    }   
-
-    @media (max-width: 900px)  {
-    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-            max-width: 560px;
-        }
-    } 
 
     </style>
 </head>
@@ -310,7 +265,7 @@ if (!empty($_FILES['archivos']['name'][0])) {
                 <ul class="list-group">
                     <?php while ($archivo = $resultado_archivos->fetch_assoc()) { ?>
                         <li class="list-group-item" style="background-color: rgba(255, 255, 255, 0.1); color: white;">
-                            <a href="<?= $archivo['archivo_url'] ?>" class="text-white" target="_blank"><?= htmlspecialchars($archivo['nombre_archivo']) ?></a>
+                        <i class="bi bi-file-earmark"></i> <a href="<?= $archivo['archivo_url'] ?>" target="_blank">Descargar</a>
                         </li>
                     <?php } ?>
                 </ul>
