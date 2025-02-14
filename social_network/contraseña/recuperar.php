@@ -4,8 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperación de contraseña</title>
-    
+
 </head>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #4a5757;
+    background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23293737' fill-opacity='0.14'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    position: relative;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 400px;
+    margin: 150px auto;
+    padding: 20px;
+    background-color: #293737;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    color: #ee5d1c;
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.controls {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: black;
+}
+
+.controls::placeholder {
+    color: #bbb;
+}
+
+.btn button {
+    background-color: #ee5d1c;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.btn button:hover {
+    background-color: #d54b15;
+}
+
+.footer {
+    margin-top: 15px;
+}
+
+.footer-link {
+    color: #ee5d1c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+.password-requirements {
+    list-style: none;
+    padding: 0;
+    font-size: 14px;
+    color: #bbb;
+    text-align: left;
+}
+
+.password-strength {
+    width: 100%;
+    height: 10px;
+    background: #354646;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 5px;
+}
+
+.strength-text {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+</style>
+
 <body>
     <main class="container">
         <!-- Paso 1: Olvidaste tu contraseña -->
@@ -16,7 +122,7 @@
             <h1>Recuperar contraseña</h1>
             <p>Ingresa tu correo electrónico para recibir un código de restablecimiento.</p>
             <form class="form">
-                <input class="controls" type="email" id="email" name="email" placeholder="Correo electrónico" required>
+                <input class="controls" type="email" id="email" name="email" placeholder="Correo electrónico..." required>
             </form>
             <div class="btn">
                 <button type="button" onclick="sendCode()">Enviar código</button>
